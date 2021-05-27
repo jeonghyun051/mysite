@@ -1,4 +1,4 @@
-package com.douzone.mysite.mvc.util;
+package com.douzone.mysite.mvc2.util;
 
 import java.io.IOException;
 
@@ -13,5 +13,10 @@ public class MvcUtils {
 		RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/views/"+path+".jsp");
 		rd.forward(request, response);
 	
+	}
+
+	public static void redirect(String url, HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException{
+		response.sendRedirect(url);
+		
 	}
 }
