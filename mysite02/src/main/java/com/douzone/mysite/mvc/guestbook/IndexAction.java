@@ -17,7 +17,8 @@ public class IndexAction implements Action{
 	@Override
 	public void execute(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		
-		List<GuestBookVo> list = new GuestBookDao().findAll();
+		List<GuestBookVo> list = new GuestBookDao().findAll();	
+		request.setAttribute("size", list.size());
 		request.setAttribute("list", list);
 		MvcUtils.forward("guestbook/list", request, response);
 	}
