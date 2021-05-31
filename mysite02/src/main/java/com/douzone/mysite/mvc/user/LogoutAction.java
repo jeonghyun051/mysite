@@ -7,8 +7,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
-import com.douzone.mvc.Action;
 import com.douzone.mysite.mvc2.util.MvcUtils;
+import com.douzone.web.util.Action;
 
 public class LogoutAction implements Action {
 

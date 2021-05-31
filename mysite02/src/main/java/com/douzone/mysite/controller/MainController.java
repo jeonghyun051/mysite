@@ -7,10 +7,10 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import com.douzone.mvc.Action;
 import com.douzone.mysite.mvc.main.MainActionFactory;
 import com.douzone.mysite.mvc.user.UserActionFactory;
 import com.douzone.mysite.mvc2.util.MvcUtils;
+import com.douzone.web.util.Action;
 
 public class MainController extends HttpServlet {
 	private static final long serialVersionUID = 1L;
@@ -18,9 +18,7 @@ public class MainController extends HttpServlet {
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		
-		request.setCharacterEncoding("utf-8");
 		String actionName = request.getParameter("a");
-		
 		Action action = new MainActionFactory().getAction(actionName);
 		action.execute(request, response);
 	}

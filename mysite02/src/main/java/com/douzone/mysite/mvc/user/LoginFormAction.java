@@ -6,8 +6,8 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import com.douzone.mvc.Action;
 import com.douzone.mysite.mvc2.util.MvcUtils;
+import com.douzone.web.util.Action;
 
 public class LoginFormAction implements Action {
 

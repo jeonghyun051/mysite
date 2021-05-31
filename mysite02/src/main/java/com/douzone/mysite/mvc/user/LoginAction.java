@@ -7,10 +7,10 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
-import com.douzone.mvc.Action;
 import com.douzone.mysite.mvc2.util.MvcUtils;
 import com.douzone.mysite.repository.UserRepository;
 import com.douzone.mysite.vo.UserVo;
+import com.douzone.web.util.Action;
 
 public class LoginAction implements Action {
 

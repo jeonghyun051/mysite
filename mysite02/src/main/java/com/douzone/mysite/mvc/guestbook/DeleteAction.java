@@ -7,10 +7,10 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import com.douzone.mvc.Action;
-import com.douzone.mysite.dao.GuestBookDao;
+import com.douzone.mysite.repository.GuestBookRepository;
 import com.douzone.mysite.mvc2.util.MvcUtils;
 import com.douzone.mysite.vo.GuestBookVo;
+import com.douzone.web.util.Action;
 
 public class DeleteAction implements Action {
 
@@ -20,11 +20,11 @@ public class DeleteAction implements Action {
 			String password = request.getParameter("password");
 			int no = Integer.parseInt(request.getParameter("no"));
 	
-			GuestBookVo vo = new GuestBookDao().findById(no);
+			GuestBookVo vo = new GuestBookRepository().findById(no);
 			String bookPassword = vo.getPassword();
 			
 			if(password.equals(bookPassword)){
-				new GuestBookDao().deleteById(no);
+				new GuestBookRepository().deleteById(no);
 				MvcUtils.redirect(request.getContextPath()+"/guestbook?a=list"+"&sucess=true", request, response);
 			} else {
 				request.setCharacterEncoding("utf-8");
