@@ -167,6 +167,35 @@ public class GuestBookRepository {
 		return vo;
 	}
 	
+	/*
+	 * public List<GuestBookVo> findByKwd(String kwd) {
+	 * 
+	 * GuestBookVo vo = new GuestBookVo(); Connection conn = null; PreparedStatement
+	 * pstmt = null; ResultSet rs = null;
+	 * 
+	 * try {
+	 * 
+	 * conn = getConnection(); String sql =
+	 * "select password from guestbook where title like ? order by no desc";
+	 * 
+	 * // 3. sql문 준비 pstmt = conn.prepareStatement(sql); pstmt.setString(1, kwd);
+	 * 
+	 * // 4. SQL문을 실행 rs = pstmt.executeQuery();
+	 * 
+	 * // 5. 결과 가져오기 while (rs.next()) { String password = rs.getString(1);
+	 * 
+	 * vo.setPassword(password); }
+	 * 
+	 * } catch (SQLException e) { System.out.println("error:" + e); } finally { try
+	 * {
+	 * 
+	 * if (rs != null) { rs.close(); } if (pstmt != null) { pstmt.close(); }
+	 * 
+	 * if (conn != null) { conn.close(); }
+	 * 
+	 * } catch (Exception e2) { // TODO: handle exception } } return vo; }
+	 */
+	
 	public Boolean deleteById(int no) {
 
 		Connection conn = null;

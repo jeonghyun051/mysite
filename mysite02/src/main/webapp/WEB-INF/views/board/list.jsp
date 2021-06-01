@@ -57,48 +57,23 @@
 							</td>
 						</tr>
 					</c:forEach>
-
-				<%-- 	<tr>
-						<td>3</td>
-						<td style="text-align: left; padding-left: 0px"><a
-							href="${pageContext.request.contextPath }/board?a=view&no=1">세
-								번째 글입니다.</a></td>
-						<td>안대혁</td>
-						<td>3</td>
-						<td>2015-10-11 12:04:20</td>
-						<td><a href="" class="del">삭제</a></td>
-					</tr>
-					<tr>
-						<td>2</td>
-						<td style="text-align: left; padding-left: 20px"><img
-							src='${pageContext.servletContext.contextPath }/assets/images/reply.png' />
-							<a href="">두 번째 글입니다.</a></td>
-						<td>안대혁</td>
-						<td>3</td>
-						<td>2015-10-02 12:04:12</td>
-						<td><a href="" class="del">삭제</a></td>
-					</tr>
-					<tr>
-						<td>1</td>
-						<td style="text-align: left; padding-left: 40px"><img
-							src='${pageContext.servletContext.contextPath }/assets/images/reply.png' />
-							<a href="">첫 번째 글입니다.</a></td>
-						<td>안대혁</td>
-						<td>3</td>
-						<td>2015-09-25 07:24:32</td>
-						<td><a href="" class="del">삭제</a></td>
-					</tr> --%>
 				</table>
 
 				<!-- pager 추가 -->
 				<div class="pager">
-					<ul>
-						<li><a href="">◀</a></li>
-						<li><a href="/mysite02/board?p=1">1</a></li>
-						<li class="selected">2</li>
-						<li><a href="/mysite02/board?p=3">3</a></li>
-						<li>4</li>
-						<li>5</li>
+					<ul>					
+					<li><a href="/mysite02/board?a=list&p=0">◀</a></li>
+						<!-- <li class="selected"><a>1</a></li> -->
+						<c:forEach begin="0" end="${lastPageNo -1}" var="lastPageNo" varStatus="status">
+							<c:choose>
+								<c:when test="${param.p == status.index }">
+									<li class="selected"><a href="/mysite02/board?a=list&p=${status.index }">${status.count }</a></li>
+								</c:when>
+								<c:otherwise>
+									<li><a href="/mysite02/board?a=list&p=${status.index }">${status.count }</a></li>	
+								</c:otherwise>
+							</c:choose>
+						</c:forEach>
 						<li><a href="">▶</a></li>
 					</ul>
 				</div>

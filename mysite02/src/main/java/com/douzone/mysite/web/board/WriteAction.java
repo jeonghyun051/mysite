@@ -37,7 +37,7 @@ public class WriteAction implements Action {
 			vo.setGroupNo(new BoardRepository().findMaxGroupNo());
 
 			new BoardRepository().insert(vo);
-			MvcUtils.redirect(request.getContextPath() + "/board?a=list", request, response);
+			MvcUtils.redirect(request.getContextPath() + "/board?a=list&p=0", request, response);
 		} else {
 			BoardVo vo = new BoardVo();
 			int groupNo = Integer.parseInt(request.getParameter("groupNo"));
@@ -52,7 +52,7 @@ public class WriteAction implements Action {
 				vo.setHit(0);
 				new BoardRepository().update(groupNo);
 				new BoardRepository().insert2(vo);	
-				MvcUtils.redirect(request.getContextPath() + "/board?a=list", request, response);
+				MvcUtils.redirect(request.getContextPath() + "/board?a=list&p=0", request, response);
 			} else if(vo2.getDepth() == 1) {
 				vo.setTitle(title);
 				vo.setContents(content);
@@ -63,7 +63,7 @@ public class WriteAction implements Action {
 				vo.setHit(0);
 				new BoardRepository().update2(groupNo, vo2.getOrderNO());
 				new BoardRepository().insert2(vo);	
-				MvcUtils.redirect(request.getContextPath() + "/board?a=list", request, response);
+				MvcUtils.redirect(request.getContextPath() + "/board?a=list&p=0", request, response);
 			} else if(vo2.getDepth() == 2) {
 				PrintWriter pw = response.getWriter();
 				pw.print("<script>alert('덧글이 2개까지만 가능합니다.');history.go(-3);</script>");

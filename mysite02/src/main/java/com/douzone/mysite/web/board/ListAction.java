@@ -20,10 +20,18 @@ public class ListAction implements Action {
 //		lastPageNo = 10;
 //		nextPageNo = 11;
 //		prevPageNo = 1;
+		int page = Integer.parseInt(request.getParameter("p")); // 현재 페이지 처음 0 
 		
+		int count = new BoardRepository().count();
+		int firstPageNo = 0;
+		int lastPageNo = (count-1) / 5;
 		
-		List<BoardVo> list = new BoardRepository().findAll();
+		List<BoardVo> list = new BoardRepository().findAll(page);
 		int size = list.size();
+		System.out.println("라스트페이지" + lastPageNo);
+		
+		request.setAttribute("firstPageNo", firstPageNo);
+		request.setAttribute("lastPageNo", lastPageNo);
 		request.setAttribute("size", size);
 		request.setAttribute("list", list);
 		

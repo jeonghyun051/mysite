@@ -11,7 +11,6 @@ import java.util.List;
 
 import com.douzone.mysite.vo.BoardVo;
 
-
 public class BoardRepository {
 	public Boolean insert(BoardVo vo) {
 
@@ -32,7 +31,7 @@ public class BoardRepository {
 			pstmt.setString(1, vo.getTitle());
 			pstmt.setString(2, vo.getContents());
 			pstmt.setInt(3, vo.getHit());
-			pstmt.setInt(4, vo.getGroupNo()+1);
+			pstmt.setInt(4, vo.getGroupNo() + 1);
 			pstmt.setInt(5, vo.getOrderNO());
 			pstmt.setInt(6, vo.getDepth());
 			pstmt.setLong(7, vo.getUserNo());
@@ -60,7 +59,7 @@ public class BoardRepository {
 
 		return result;
 	}
-	
+
 	public Boolean insert2(BoardVo vo) {
 
 		Connection conn = null;
@@ -108,9 +107,9 @@ public class BoardRepository {
 
 		return result;
 	}
-	
+
 	public int findMaxGroupNo() {
-		
+
 		int groupNo = 0;
 		Connection conn = null;
 		PreparedStatement pstmt = null;
@@ -124,7 +123,7 @@ public class BoardRepository {
 			rs = pstmt.executeQuery();
 			// 5. 결과 가져오기
 			while (rs.next()) {
-				 groupNo = rs.getInt(1);
+				groupNo = rs.getInt(1);
 			}
 		} catch (SQLException e) {
 			System.out.println("error:" + e);
@@ -145,11 +144,11 @@ public class BoardRepository {
 				// TODO: handle exception
 			}
 		}
-		return groupNo;	
+		return groupNo;
 	}
-	
-public int findMaxGroupNo(Long no) {
-		
+
+	public int findMaxGroupNo(Long no) {
+
 		int groupNo = 0;
 		Connection conn = null;
 		PreparedStatement pstmt = null;
@@ -157,14 +156,14 @@ public int findMaxGroupNo(Long no) {
 		try {
 			conn = getConnection();
 			String sql = "select max(group_no) from board where no = ?";
-			
+
 			pstmt = conn.prepareStatement(sql);
 			pstmt.setLong(1, no);
-			
+
 			rs = pstmt.executeQuery();
-			
+
 			while (rs.next()) {
-				 groupNo = rs.getInt(1);
+				groupNo = rs.getInt(1);
 			}
 		} catch (SQLException e) {
 			System.out.println("error:" + e);
@@ -185,10 +184,48 @@ public int findMaxGroupNo(Long no) {
 				// TODO: handle exception
 			}
 		}
-		return groupNo;	
+		return groupNo;
 	}
 
-	public List<BoardVo> findAll()  {
+	public int count() {
+
+		Connection conn = null;
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		try {
+			conn = getConnection();
+			String sql = "select count(*) from board";
+
+			pstmt = conn.prepareStatement(sql);
+
+			rs = pstmt.executeQuery();
+
+			if (rs.next()) {
+				return rs.getInt(1);
+			}
+		} catch (SQLException e) {
+			System.out.println("error:" + e);
+		} finally {
+			try {
+
+				if (rs != null) {
+					rs.close();
+				}
+				if (pstmt != null) {
+					pstmt.close();
+				}
+				if (conn != null) {
+					conn.close();
+				}
+
+			} catch (Exception e2) {
+				// TODO: handle exception
+			}
+		}
+		return -1;
+	}
+
+	public List<BoardVo> findAll(int page) {
 
 		List<BoardVo> result = new ArrayList<>();
 
@@ -200,12 +237,12 @@ public int findMaxGroupNo(Long no) {
 
 			conn = getConnection();
 			String sql = "select b.no, b.title, b.contents, b.reg_date, b.hit, b.group_no, b.order_no, b.depth, b.user_no, u.name \r\n"
-					+ "from board b, user u\r\n"
-					+ "where u.no = b.user_no \r\n"
-					+ "order by group_no desc, order_no asc";
+					+ "from board b, user u\r\n" + "where u.no = b.user_no \r\n"
+					+ "order by group_no desc, order_no asc limit ?,5";
 
 			// 3. sql문 준비
 			pstmt = conn.prepareStatement(sql);
+			pstmt.setInt(1, page * 5);
 
 			// 4. SQL문을 실행
 			rs = pstmt.executeQuery();
@@ -222,9 +259,9 @@ public int findMaxGroupNo(Long no) {
 				int depth = rs.getInt(8);
 				Long userNo = rs.getLong(9);
 				String name = rs.getString(10);
-				
+
 				BoardVo vo = new BoardVo();
-				
+
 				vo.setNo(no);
 				vo.setTitle(title);
 				vo.setContents(contents);
@@ -235,7 +272,7 @@ public int findMaxGroupNo(Long no) {
 				vo.setDepth(depth);
 				vo.setUserNo(userNo);
 				vo.setUserName(name);
-				
+
 				result.add(vo);
 			}
 
@@ -263,7 +300,7 @@ public int findMaxGroupNo(Long no) {
 	}
 
 	public BoardVo findById(Long no) {
-		
+
 		BoardVo vo = new BoardVo();
 		Connection conn = null;
 		PreparedStatement pstmt = null;
@@ -290,7 +327,7 @@ public int findMaxGroupNo(Long no) {
 				int oderNo = rs.getInt(5);
 				int depth = rs.getInt(6);
 				Long userNo = rs.getLong(7);
-				
+
 				vo.setNo(no);
 				vo.setTitle(title);
 				vo.setContents(content);
@@ -322,9 +359,9 @@ public int findMaxGroupNo(Long no) {
 		}
 		return vo;
 	}
-	
+
 	public int findByIdTopOrderNo(int no) {
-		
+
 		int groupNo = 0;
 		Connection conn = null;
 		PreparedStatement pstmt = null;
@@ -370,7 +407,7 @@ public int findMaxGroupNo(Long no) {
 		}
 		return groupNo;
 	}
-	
+
 	public Boolean deleteById(Long no) {
 
 		Connection conn = null;
@@ -388,7 +425,7 @@ public int findMaxGroupNo(Long no) {
 
 			// 4. 바인딩(Binding)
 			pstmt.setLong(1, no);
-			
+
 			// 5. SQL문을 실행
 			int count = pstmt.executeUpdate();
 			result = count == 1;
@@ -412,7 +449,7 @@ public int findMaxGroupNo(Long no) {
 
 		return result;
 	}
-	
+
 	public Boolean update(int no) {
 
 		Connection conn = null;
@@ -425,13 +462,12 @@ public int findMaxGroupNo(Long no) {
 			// 2. 연결 하기
 			conn = getConnection();
 
-			String sql = "update board set order_no=order_no+1\r\n"
-					+ "where group_no = ? and order_no>=1";
+			String sql = "update board set order_no=order_no+1\r\n" + "where group_no = ? and order_no>=1";
 			pstmt = conn.prepareStatement(sql);
 
 			// 4. 바인딩(Binding)
 			pstmt.setInt(1, no);
-			
+
 			// 5. SQL문을 실행
 			int count = pstmt.executeUpdate();
 			result = count == 1;
@@ -455,8 +491,8 @@ public int findMaxGroupNo(Long no) {
 
 		return result;
 	}
-	
-	public Boolean update2(int no,int orderNo) {
+
+	public Boolean update2(int no, int orderNo) {
 
 		Connection conn = null;
 		PreparedStatement pstmt = null;
@@ -468,14 +504,13 @@ public int findMaxGroupNo(Long no) {
 			// 2. 연결 하기
 			conn = getConnection();
 
-			String sql = "update board set order_no=order_no+1\r\n"
-					+ "where group_no = ? and order_no>?";
+			String sql = "update board set order_no=order_no+1\r\n" + "where group_no = ? and order_no>?";
 			pstmt = conn.prepareStatement(sql);
 
 			// 4. 바인딩(Binding)
 			pstmt.setInt(1, no);
 			pstmt.setInt(2, orderNo);
-			
+
 			// 5. SQL문을 실행
 			int count = pstmt.executeUpdate();
 			result = count == 1;
@@ -499,7 +534,7 @@ public int findMaxGroupNo(Long no) {
 
 		return result;
 	}
-	
+
 	public Boolean updateHit(Long no) {
 
 		Connection conn = null;
@@ -515,7 +550,7 @@ public int findMaxGroupNo(Long no) {
 
 			// 4. 바인딩(Binding)
 			pstmt.setLong(1, no);
-			
+
 			// 5. SQL문을 실행
 			int count = pstmt.executeUpdate();
 			result = count == 1;
@@ -539,8 +574,7 @@ public int findMaxGroupNo(Long no) {
 
 		return result;
 	}
-	
-	
+
 	private Connection getConnection() throws SQLException {
 		Connection conn = null;
 		try {
@@ -555,8 +589,5 @@ public int findMaxGroupNo(Long no) {
 		}
 		return conn;
 	}
-
-	
-
 
 }
