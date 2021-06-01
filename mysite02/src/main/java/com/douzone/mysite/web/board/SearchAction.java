@@ -17,18 +17,27 @@ public class SearchAction implements Action {
 	@Override
 	public void execute(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		
-		int count = new BoardRepository().countByKwd();
+	
+		int page = Integer.parseInt(request.getParameter("p"));
+		String kwd = request.getParameter("kwd");
+		
+		int count = new BoardRepository().countByKwd(page,kwd);
 		int firstPageNo = 0;
 		int lastPageNo = (count-1) / 5;
-		String kwd = request.getParameter("kwd");
-		int page = 0;
+		System.out.println("=======searchaction=========");
+		System.out.println("검색값" + kwd);
+		System.out.println("카운터" + count);
+		System.out.println("첫페이지" + firstPageNo);
+		System.out.println("라스트페이지" + lastPageNo);
+
+		
 		List<BoardVo> list = new BoardRepository().findByKwd(page, kwd);
 		int size = list.size();
 		
-		request.setAttribute("firstPageNo", firstPageNo);
-		request.setAttribute("lastPageNo", lastPageNo);
-		request.setAttribute("count", count);
-		request.setAttribute("size", size);
+		request.setAttribute("firstPageNo2", firstPageNo);
+		request.setAttribute("lastPageNo2", lastPageNo);
+		request.setAttribute("count2", count);
+		request.setAttribute("size2", size);
 		request.setAttribute("list", list);
 		MvcUtils.forward("board/list", request, response);
 		

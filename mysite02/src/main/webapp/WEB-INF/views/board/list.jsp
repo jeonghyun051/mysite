@@ -16,11 +16,12 @@
 		<c:import url="/WEB-INF/views/includes/header.jsp" />
 		<div id="content">
 			<div id="board">
-				<form id="search_form"
-					action="${pageContext.request.contextPath }/board?a=search"
-					method="post">
-					<input type="text" id="kwd" name="kwd" value=""> <input
-						type="submit" value="찾기">
+				<form id="search_form" action="${pageContext.request.contextPath }/board">
+					<input type="hidden" name="a" value="search" />
+					<input type="hidden" name="p" value="0" />
+					
+					<input type="text" id="kwd" name="kwd"> 
+					<input type="submit" value="찾기">
 				</form>
 				<table class="tbl-ex">
 					<tr>
@@ -34,7 +35,17 @@
 
 					<c:forEach items="${list }" var="list" varStatus="status">
 						<tr>
-							<td>${count-status.index-param.p*5 }</td>
+						
+							<c:choose>
+								<c:when test="${empty param.kwd }">
+									<td>${count-status.index-param.p*5 }</td>
+								</c:when>
+								<c:otherwise>
+									<td>${count2-status.index-param.p*5 }</td>
+								</c:otherwise>
+							</c:choose>
+							
+							
 							<c:if test="${list.depth == 0 }">
 								<td style="text-align: left; padding-left: 0px">
 							</c:if>
@@ -62,41 +73,83 @@
 				</table>
 
 				<!-- pager 추가 -->
-				<div class="pager">
-					<ul>
-						<c:choose>
-							<c:when test="${param.p == 0 }">
-								<li><a href="/mysite02/board?a=list&p=${param.p}">◀</a></li>
-							</c:when>
-							<c:otherwise>
-								<li><a href="/mysite02/board?a=list&p=${param.p-1}">◀</a></li>
-							</c:otherwise>
-						</c:choose>
-
-						<!-- <li class="selected"><a>1</a></li> -->
-						<c:forEach begin="0" end="${lastPageNo }" var="lastPageNo"
-							varStatus="status">
-							<c:choose>
-								<c:when test="${param.p == status.index }">
-									<li class="selected"><a
-										href="/mysite02/board?a=list&p=${status.index }">${status.count }</a></li>
-								</c:when>
-								<c:otherwise>
-									<li><a href="/mysite02/board?a=list&p=${status.index }">${status.count }</a></li>
-								</c:otherwise>
-							</c:choose>
-						</c:forEach>
-						<c:choose>
-							<c:when test="${param.p == lastPageNo }">
-								<li><a href="/mysite02/board?a=list&p=${param.p}">▶</a></li>
-							</c:when>
-							<c:otherwise>
-								<li><a href="/mysite02/board?a=list&p=${param.p+1}">▶</a></li>
-							</c:otherwise>
-						</c:choose>
-
-					</ul>
-				</div>
+				<c:choose>
+					<c:when test="${empty param.kwd }">
+						<div class="pager">
+							<ul>
+								<c:choose>
+									<c:when test="${param.p == 0 }">
+										<li><a href="/mysite02/board?a=list&p=${param.p}">◀</a></li>
+									</c:when>
+									<c:otherwise>
+										<li><a href="/mysite02/board?a=list&p=${param.p-1}">◀</a></li>
+									</c:otherwise>
+								</c:choose>
+		
+								<!-- <li class="selected"><a>1</a></li> -->
+								<c:forEach begin="0" end="${lastPageNo }" var="lastPageNo"
+									varStatus="status">
+									<c:choose>
+										<c:when test="${param.p == status.index }">
+											<li class="selected"><a
+												href="/mysite02/board?a=list&p=${status.index }">${status.count }</a></li>
+										</c:when>
+										<c:otherwise>
+											<li><a href="/mysite02/board?a=list&p=${status.index }">${status.count }</a></li>
+										</c:otherwise>
+									</c:choose>
+								</c:forEach>
+								<c:choose>
+									<c:when test="${param.p == lastPageNo }">
+										<li><a href="/mysite02/board?a=list&p=${param.p}">▶</a></li>
+									</c:when>
+									<c:otherwise>
+										<li><a href="/mysite02/board?a=list&p=${param.p+1}">▶</a></li>
+									</c:otherwise>
+								</c:choose>
+		
+							</ul>
+						</div>
+					</c:when>
+					<c:otherwise>
+						<div class="pager">
+							<ul>
+								<c:choose>
+									<c:when test="${param.p == 0 }">
+										<li><a href="/mysite02/board?a=search&p=${param.p}&kwd=${param.kwd }" >◀</a></li>
+									</c:when>
+									<c:otherwise>
+										<li><a href="/mysite02/board?a=search&p=${param.p -1}&kwd=${param.kwd }" >◀</a></li>
+									</c:otherwise>
+								</c:choose>
+		
+								<!-- <li class="selected"><a>1</a></li> -->
+								<c:forEach begin="0" end="${lastPageNo2 }" var="lastPageNo"
+									varStatus="status">
+									<c:choose>
+										<c:when test="${param.p == status.index }">
+											<li class="selected"><a
+												href="/mysite02/board?a=search&p=${status.index }&kwd=${param.kwd}">${status.count }</a></li>
+										</c:when>
+										<c:otherwise>
+											<li><a href="/mysite02/board?a=search&p=${status.index }&kwd=${param.kwd}">${status.count }</a></li>
+										</c:otherwise>
+									</c:choose>
+								</c:forEach>
+								<c:choose>
+									<c:when test="${param.p == lastPageNo2 }">
+										<li><a href="/mysite02/board?a=search&p=${param.p}&kwd=${param.kwd }" >▶</a></li>
+									</c:when>
+									<c:otherwise>
+										<li><a href="/mysite02/board?a=search&p=${param.p+1}&kwd=${param.kwd }">▶</a></li>
+									</c:otherwise>
+								</c:choose>
+		
+							</ul>
+						</div>
+					
+					</c:otherwise>
+				</c:choose>
 				<!-- pager 추가 -->
 
 				<c:if test="${authUser.no != null }">

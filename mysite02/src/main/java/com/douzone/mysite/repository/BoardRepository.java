@@ -225,7 +225,7 @@ public class BoardRepository {
 		return -1;
 	}
 	
-	public int countByKwd() {
+	public int countByKwd(int page, String kwd) {
 
 		Connection conn = null;
 		PreparedStatement pstmt = null;
@@ -239,8 +239,13 @@ public class BoardRepository {
 					+ "order by group_no desc, order_no asc limit ?,5";
 
 			pstmt = conn.prepareStatement(sql);
-
+			pstmt.setString(1, "%"+kwd+"%");
+			pstmt.setString(2, "%"+kwd+"%");
+			pstmt.setString(3, "%"+kwd+"%");
+			pstmt.setInt(4, 0 * 5);
+			
 			rs = pstmt.executeQuery();
+			
 
 			if (rs.next()) {
 				return rs.getInt(1);
