@@ -19,7 +19,7 @@ public class BoardActionFactory extends ActionFactory {
 		}else if("delete".equals(actionName)) {
 			action = new DeleteAction();
 		}else if("search".equals(actionName)) {
-			action = new searchAction();
+			action = new SearchAction();
 		}
 		
 		else {

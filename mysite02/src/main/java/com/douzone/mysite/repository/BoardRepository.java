@@ -224,6 +224,48 @@ public class BoardRepository {
 		}
 		return -1;
 	}
+	
+	public int countByKwd() {
+
+		Connection conn = null;
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		try {
+			conn = getConnection();
+			String sql = "select count(*)\r\n"
+					+ "from board b , user u\r\n"
+					+ "where b.user_no = u.no and\r\n"
+					+ "b.title like ? or b.contents like ? or u.name like ?\r\n"
+					+ "order by group_no desc, order_no asc limit ?,5";
+
+			pstmt = conn.prepareStatement(sql);
+
+			rs = pstmt.executeQuery();
+
+			if (rs.next()) {
+				return rs.getInt(1);
+			}
+		} catch (SQLException e) {
+			System.out.println("error:" + e);
+		} finally {
+			try {
+
+				if (rs != null) {
+					rs.close();
+				}
+				if (pstmt != null) {
+					pstmt.close();
+				}
+				if (conn != null) {
+					conn.close();
+				}
+
+			} catch (Exception e2) {
+				// TODO: handle exception
+			}
+		}
+		return -1;
+	}
 
 	public List<BoardVo> findAll(int page) {
 
@@ -243,6 +285,85 @@ public class BoardRepository {
 			// 3. sql문 준비
 			pstmt = conn.prepareStatement(sql);
 			pstmt.setInt(1, page * 5);
+
+			// 4. SQL문을 실행
+			rs = pstmt.executeQuery();
+
+			// 5. 결과 가져오기
+			while (rs.next()) {
+				Long no = rs.getLong(1);
+				String title = rs.getString(2);
+				String contents = rs.getString(3);
+				String regDate = rs.getString(4);
+				int hit = rs.getInt(5);
+				int groupNo = rs.getInt(6);
+				int orderNo = rs.getInt(7);
+				int depth = rs.getInt(8);
+				Long userNo = rs.getLong(9);
+				String name = rs.getString(10);
+
+				BoardVo vo = new BoardVo();
+
+				vo.setNo(no);
+				vo.setTitle(title);
+				vo.setContents(contents);
+				vo.setRegDate(regDate);
+				vo.setHit(hit);
+				vo.setGroupNo(groupNo);
+				vo.setOrderNO(orderNo);
+				vo.setDepth(depth);
+				vo.setUserNo(userNo);
+				vo.setUserName(name);
+
+				result.add(vo);
+			}
+
+		} catch (SQLException e) {
+			System.out.println("error:" + e);
+		} finally {
+			try {
+
+				if (rs != null) {
+					rs.close();
+				}
+				if (pstmt != null) {
+					pstmt.close();
+				}
+
+				if (conn != null) {
+					conn.close();
+				}
+
+			} catch (Exception e2) {
+				// TODO: handle exception
+			}
+		}
+		return result;
+	}
+	
+	public List<BoardVo> findByKwd(int page, String kwd) {
+
+		List<BoardVo> result = new ArrayList<>();
+
+		Connection conn = null;
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+
+		try {
+
+			conn = getConnection();
+			String sql = "select b.no, b.title, b.contents, b.reg_date, b.hit, b.group_no, b.order_no, b.depth, b.user_no, u.name\r\n"
+					+ "from board b , user u\r\n"
+					+ "where b.user_no = u.no and\r\n"
+					+ "b.title like ? or b.contents like ? or u.name like ?\r\n"
+					+ "order by group_no desc, order_no asc limit ?,5";
+
+			// 3. sql문 준비
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setString(1, "%"+kwd+"%");
+			pstmt.setString(2, "%"+kwd+"%");
+			pstmt.setString(3, "%"+kwd+"%");
+			pstmt.setInt(4, page * 5);
 
 			// 4. SQL문을 실행
 			rs = pstmt.executeQuery();
@@ -574,7 +695,9 @@ public class BoardRepository {
 
 		return result;
 	}
-
+	
+	
+	
 	private Connection getConnection() throws SQLException {
 		Connection conn = null;
 		try {

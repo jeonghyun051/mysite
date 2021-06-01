@@ -12,32 +12,26 @@ import com.douzone.mysite.vo.BoardVo;
 import com.douzone.web.Action;
 import com.douzone.web.util.MvcUtils;
 
-public class ListAction implements Action {
+public class SearchAction implements Action {
 
 	@Override
 	public void execute(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-//		firstPageNo = 1;
-//		lastPageNo = 10;
-//		nextPageNo = 11;
-//		prevPageNo = 1;
-		int page = Integer.parseInt(request.getParameter("p")); // 현재 페이지 처음 0 
 		
-		int count = new BoardRepository().count();
+		int count = new BoardRepository().countByKwd();
 		int firstPageNo = 0;
 		int lastPageNo = (count-1) / 5;
-		
-		List<BoardVo> list = new BoardRepository().findAll(page);
+		String kwd = request.getParameter("kwd");
+		int page = 0;
+		List<BoardVo> list = new BoardRepository().findByKwd(page, kwd);
 		int size = list.size();
-		
-		System.out.println("라스트페이지" + lastPageNo);
 		
 		request.setAttribute("firstPageNo", firstPageNo);
 		request.setAttribute("lastPageNo", lastPageNo);
 		request.setAttribute("count", count);
 		request.setAttribute("size", size);
 		request.setAttribute("list", list);
-		
 		MvcUtils.forward("board/list", request, response);
+		
 
 	}
 
