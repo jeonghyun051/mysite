@@ -1,6 +1,7 @@
 package com.douzone.mysite.web.board;
 
 import java.io.IOException;
+import java.io.PrintWriter;
 import java.util.List;
 
 import javax.servlet.ServletException;
@@ -22,26 +23,23 @@ public class SearchAction implements Action {
 		String kwd = request.getParameter("kwd");
 		
 		int count = new BoardRepository().countByKwd(page,kwd);
-		int firstPageNo = 0;
-		int lastPageNo = (count-1) / 5;
-		System.out.println("=======searchaction=========");
-		System.out.println("검색값" + kwd);
-		System.out.println("카운터" + count);
-		System.out.println("첫페이지" + firstPageNo);
-		System.out.println("라스트페이지" + lastPageNo);
-
-		
-		List<BoardVo> list = new BoardRepository().findByKwd(page, kwd);
-		int size = list.size();
-		
-		request.setAttribute("firstPageNo2", firstPageNo);
-		request.setAttribute("lastPageNo2", lastPageNo);
-		request.setAttribute("count2", count);
-		request.setAttribute("size2", size);
-		request.setAttribute("list", list);
-		MvcUtils.forward("board/list", request, response);
-		
-
+		if(count == 0) {
+			PrintWriter pw = response.getWriter();
+			pw.print("<script>alert('없음');history.go(-1);</script>");
+		} else {
+			int firstPageNo = 0;
+			int lastPageNo = (count-1) / 5;
+			
+			List<BoardVo> list = new BoardRepository().findByKwd(page, kwd);
+			int size = list.size();
+			
+			request.setAttribute("firstPageNo2", firstPageNo);
+			request.setAttribute("lastPageNo2", lastPageNo);
+			request.setAttribute("count2", count);
+			request.setAttribute("size2", size);
+			request.setAttribute("list", list);
+			MvcUtils.forward("board/list", request, response);
+			
+		}
 	}
-
 }

@@ -3,6 +3,7 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn"%> 
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
+<% pageContext.setAttribute("newline", "\n"); %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -27,7 +28,8 @@
 						<td class="label">내용</td>
 						<td>
 							<div class="view-content">
-								${vo.contents }
+							${fn:replace(vo.contents, newline, "<br/>") }
+							
 							</div>
 						</td>
 					</tr>
@@ -36,9 +38,9 @@
 				<c:if test="${authUser.no != null }">
 					<a href="${pageContext.request.contextPath }/board?a=writeform&boardNo=${vo.no }&userNo=${authUser.no }&groupNo=${vo.groupNo}" id="new-book">글쓰기</a>
 				</c:if>
-				<a href="${pageContext.request.contextPath }/board?a=list">글목록</a>
+				<a href="${pageContext.request.contextPath }/board?a=list&p=0">글목록</a>
 				<c:if test="${authUser.no == vo.userNo}">
-					<a href="${pageContext.request.contextPath }/board?a=modify">글수정</a>
+					<a href="${pageContext.request.contextPath }/board?a=modifyform&no=${vo.no}">글수정</a>
 				</c:if>
 				</div>
 			</div>

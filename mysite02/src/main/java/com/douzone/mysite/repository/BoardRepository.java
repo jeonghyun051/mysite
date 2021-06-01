@@ -232,10 +232,10 @@ public class BoardRepository {
 		ResultSet rs = null;
 		try {
 			conn = getConnection();
-			String sql = "select count(*)\r\n"
-					+ "from board b , user u\r\n"
-					+ "where b.user_no = u.no and\r\n"
-					+ "b.title like ? or b.contents like ? or u.name like ?\r\n"
+			String sql = "select count(*) \r\n"
+					+ "from board b\r\n"
+					+ "join user u on u.no = b.user_no \r\n"
+					+ "where b.title like ? or b.contents like ? or u.name like ?\r\n"
 					+ "order by group_no desc, order_no asc limit ?,5";
 
 			pstmt = conn.prepareStatement(sql);
@@ -358,9 +358,9 @@ public class BoardRepository {
 
 			conn = getConnection();
 			String sql = "select b.no, b.title, b.contents, b.reg_date, b.hit, b.group_no, b.order_no, b.depth, b.user_no, u.name\r\n"
-					+ "from board b , user u\r\n"
-					+ "where b.user_no = u.no and\r\n"
-					+ "b.title like ? or b.contents like ? or u.name like ?\r\n"
+					+ "from board b\r\n"
+					+ "join user u on u.no = b.user_no \r\n"
+					+ "where b.title like ? or b.contents like ? or u.name like ?\r\n"
 					+ "order by group_no desc, order_no asc limit ?,5";
 
 			// 3. sql문 준비
@@ -618,6 +618,52 @@ public class BoardRepository {
 		return result;
 	}
 
+
+	public Boolean boardupdate(BoardVo vo) {
+
+		Connection conn = null;
+		PreparedStatement pstmt = null;
+		boolean result = false;
+
+		try {
+			// 1. JDBC Driver 로딩
+
+			// 2. 연결 하기
+			conn = getConnection();
+
+			String sql = "update board set title = ?, contents= ? where no = ?";
+			pstmt = conn.prepareStatement(sql);
+
+			// 4. 바인딩(Binding)
+			pstmt.setString(1, vo.getTitle());
+			pstmt.setString(2, vo.getContents());
+			pstmt.setLong(3, vo.getNo());
+
+			// 5. SQL문을 실행
+			int count = pstmt.executeUpdate();
+			result = count == 1;
+
+		} catch (SQLException e) {
+			System.out.println("error:" + e);
+		} finally {
+			try {
+				if (pstmt != null) {
+					pstmt.close();
+				}
+
+				if (conn != null) {
+					conn.close();
+				}
+
+			} catch (Exception e2) {
+				// TODO: handle exception
+			}
+		}
+
+		return result;
+	}
+	
+	
 	public Boolean update2(int no, int orderNo) {
 
 		Connection conn = null;
