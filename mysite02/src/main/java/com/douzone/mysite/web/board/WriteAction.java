@@ -66,7 +66,7 @@ public class WriteAction implements Action {
 				MvcUtils.redirect(request.getContextPath() + "/board?a=list&p=0", request, response);
 			} else if(vo2.getDepth() == 2) {
 				PrintWriter pw = response.getWriter();
-				pw.print("<script>alert('덧글이 2개까지만 가능합니다.');history.go(-3);</script>");
+				pw.print("<script>alert('덧글은 2개까지만 가능합니다.');history.go(-3);</script>");
 				
 			}
 		}
