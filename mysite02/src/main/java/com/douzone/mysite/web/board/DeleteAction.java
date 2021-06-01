@@ -16,9 +16,10 @@ public class DeleteAction implements Action {
 	public void execute(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		
 		Long no = Long.parseLong(request.getParameter("no"));
+		int p = Integer.parseInt(request.getParameter("p"));
 		
 		new BoardRepository().deleteById(no);
-		MvcUtils.redirect(request.getContextPath()+"/board?a=list&p=0", request, response);
+		MvcUtils.redirect(request.getContextPath()+"/board?a=list&p="+p, request, response);
 	}
 
 }

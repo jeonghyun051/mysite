@@ -70,7 +70,7 @@
 							<td>${list.regDate }</td>
 							<td><c:if test="${list.userNo == authUser.no}">
 									<a
-										href="${pageContext.request.contextPath }/board?a=delete&no=${list.no }"
+										href="${pageContext.request.contextPath }/board?a=delete&no=${list.no }&p=${param.p}"
 										class="del">삭제</a>
 								</c:if></td>
 						</tr>
