@@ -18,7 +18,7 @@ public class DeleteAction implements Action {
 		Long no = Long.parseLong(request.getParameter("no"));
 		
 		new BoardRepository().deleteById(no);
-		MvcUtils.redirect(request.getContextPath()+"/board?a=list", request, response);
+		MvcUtils.redirect(request.getContextPath()+"/board?a=list&p=0", request, response);
 	}
 
 }

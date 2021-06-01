@@ -49,8 +49,13 @@
 							<c:if test="${list.depth == 0 }">
 								<td style="text-align: left; padding-left: 0px">
 							</c:if>
+							
+							<c:if test="${list.depth >= 1}">
+								<td style="text-align: left; padding-left: ${list.depth *20}px"><img
+									src='${pageContext.servletContext.contextPath }/assets/images/reply.png' />
+							</c:if>
 
-							<c:if test="${list.depth == 1}">
+						<%-- 	<c:if test="${list.depth == 1}">
 								<td style="text-align: left; padding-left: 20px"><img
 									src='${pageContext.servletContext.contextPath }/assets/images/reply.png' />
 							</c:if>
@@ -58,7 +63,7 @@
 							<c:if test="${list.depth == 2}">
 								<td style="text-align: left; padding-left: 40px"><img
 									src='${pageContext.servletContext.contextPath }/assets/images/reply.png' />
-							</c:if>
+							</c:if> --%>
 							<a href="${pageContext.request.contextPath }/board?a=view&no=${list.no }">${list.title }</a>
 							<td>${list.userName }</td>
 							<td>${list.hit }</td>

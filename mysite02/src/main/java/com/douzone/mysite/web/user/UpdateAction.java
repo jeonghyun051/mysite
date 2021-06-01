@@ -5,6 +5,7 @@ import java.io.IOException;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import com.douzone.mysite.repository.UserRepository;
 import com.douzone.mysite.vo.UserVo;
@@ -26,8 +27,14 @@ public class UpdateAction implements Action {
 		vo.setPassword(password);
 		vo.setGender(gender);
 		vo.setNo(no);
+		HttpSession session = request.getSession();
+		UserVo authUser = (UserVo)session.getAttribute("authUser");
+		authUser.setName(name);
+		authUser.setPassword(password);
+		authUser.setGender(gender);
 		
 		new UserRepository().update(vo);
+		
 		
 		MvcUtils.redirect(request.getContextPath(), request, response);
 		
