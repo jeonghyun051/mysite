@@ -17,7 +17,7 @@
 		<c:import url="/WEB-INF/views/includes/header.jsp" />
 		<div id="content">
 			<div id="guestbook">
-				<form action="${pageContext.request.contextPath }/guestbook?a=addAction" method="post">
+				<form action="${pageContext.request.contextPath }/guestbook/add" method="post">
 					<input type="hidden" name="a" value="insert">
 					<table>
 						<tr>
@@ -33,14 +33,15 @@
 					</table>
 				</form>
 				<ul>
-					<li>				
+					<li>			
+					<c:set var="number" value="${fn:length(list) }"/>	
 					<c:forEach var="vo" items="${list }" varStatus="status">
 						<table>
 							<tr>
-								<td>${size-status.index }</td>
+								<td>${number-status.index }</td>
 								<td>${vo.name }</td>
 								<td>${vo.regDate }</td>
-								<td><a href="${pageContext.request.contextPath }/guestbook?a=deleteform&no=${vo.no}">삭제</a></td>
+								<td><a href="${pageContext.request.contextPath }/guestbook/delete/${vo.no}">삭제</a></td>
 							</tr>
 							<tr>
 								<td colspan=4>
