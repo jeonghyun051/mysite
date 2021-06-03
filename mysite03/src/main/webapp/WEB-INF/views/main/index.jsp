@@ -12,7 +12,6 @@
 <link href="${pageContext.request.contextPath}/assets/css/main.css" rel="stylesheet" type="text/css">
 </head>
 <body>
-<div class="abc">12312312ㅡ</div>
 	<div id="container">
 		<c:import url="/WEB-INF/views/includes/header.jsp" />
 		<div id="wrapper">

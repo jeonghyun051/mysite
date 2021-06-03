@@ -8,8 +8,7 @@
 <head>
 <title>mysite2</title>
 <meta http-equiv="content-type" content="text/html; charset=utf-8">
-<link href="${pageContext.request.contextPath }/assets/css/board.css"
-	rel="stylesheet" type="text/css">
+<link href="${pageContext.servletContext.contextPath }/assets/css/board.css" rel="stylesheet" type="text/css">
 </head>
 <body>
 	<div id="container">
@@ -62,7 +61,7 @@
 							<td><c:if test="${list.userNo == authUser.no}">
 									<a
 										href="${pageContext.request.contextPath }/board?a=delete&no=${list.no }&p=${param.p}"
-										class="del">삭제</a>
+										class="del" style='background-image:url("${pageContext.request.contextPath }/assets/images/recycle.png")'>삭제</a>
 								</c:if></td>
 						</tr>
 					</c:forEach>
