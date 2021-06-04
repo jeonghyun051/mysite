@@ -11,5 +11,6 @@
 </head>
 <body>
 	<h1>Exception Occurs</h1>
+	<pre>${exception }</pre>
 </body>
 </html>

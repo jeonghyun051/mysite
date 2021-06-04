@@ -50,10 +50,10 @@ public class GuestBookController {
 		}
 	}
 	
-	@ExceptionHandler(Exception.class) // 모든 exception
-	public String HandlerException() {
-		// 1. logging 
-		// 2. 사용자한테 사과
-		return "error/exception";
-	}
+//	@ExceptionHandler(Exception.class) // 모든 exception
+//	public String HandlerException() {
+//		// 1. logging 
+//		// 2. 사용자한테 사과
+//		return "error/exception";
+//	}
 }
