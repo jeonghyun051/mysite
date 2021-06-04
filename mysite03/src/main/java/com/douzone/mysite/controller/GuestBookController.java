@@ -5,10 +5,10 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import com.douzone.mysite.service.GuestBookService;
 import com.douzone.mysite.vo.GuestBookVo;
@@ -36,18 +36,13 @@ public class GuestBookController {
 	@RequestMapping(value = "/delete/{no}", method = RequestMethod.GET)
 	public String delete(Model model, @PathVariable int no) {
 		model.addAttribute("no",no);
-		return "guestbook/delete";
+		return "guestbook/deleteform";
 	}
 	
-	@RequestMapping(value = "/delete/{no}", method = RequestMethod.POST)
-	public String delete(String password, @PathVariable int no) {
-		GuestBookVo vo = guestBookService.findByPassword(no);
-		int result = guestBookService.deleteMessage(no,password,vo);
-		if(result == 1) {
-			return "redirect:/guestbook";
-		} else {
-			return "guestbook/deleteform";
-		}
+	@RequestMapping(value="/delete/{no}", method=RequestMethod.POST)
+	public String delete(@PathVariable("no") Long no, @RequestParam(value="password", required=true, defaultValue="") String password) {
+		guestBookService.deleteMessage(no, password);
+		return "redirect:/guestbook";
 	}
 	
 //	@ExceptionHandler(Exception.class) // 모든 exception
