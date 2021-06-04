@@ -16,9 +16,6 @@ public class GuestBookRepository {
 	@Autowired
 	private SqlSession sqlSession;
 	
-	@Autowired
-	private DataSource dataSource;
-	
 	public Boolean insert(GuestBookVo vo) {
 		int count = sqlSession.insert("guestbook.insert",vo);
 		return count == 1; // 1이면 true

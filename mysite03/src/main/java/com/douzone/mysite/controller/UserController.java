@@ -49,10 +49,10 @@ public class UserController {
 		System.out.println("email:"+email+" " + "password:" + password);
 		
 		UserVo authUser = userService.getUser(email,password);
-		System.out.println(authUser);
+
 		if(authUser == null) {
 			model.addAttribute("result","fail");
-			model.addAttribute("result",email);
+			model.addAttribute("email",email);
 			
 			return "user/login";
 		}
@@ -73,5 +73,35 @@ public class UserController {
 		session.removeAttribute("authUser");
 		session.invalidate();
 		return "redirect:/";
+	}
+	
+	@RequestMapping(value = "/update", method = RequestMethod.GET)
+	public String update(HttpSession session, Model model) {
+		
+		// 접근제어
+		UserVo authUser = (UserVo)session.getAttribute("authUser");
+		if(authUser == null) {
+			return "redirect:/";
+		}
+		Long no = authUser.getNo();
+		UserVo userVo = userService.getUser(no);		
+			
+		model.addAttribute("user", userVo);
+		return "user/update";
+	}
+	
+	@RequestMapping(value = "/update", method = RequestMethod.POST)
+	public String update(HttpSession session,UserVo userVo) {
+		// 접근제어
+		UserVo authUser = (UserVo)session.getAttribute("authUser");
+		if(authUser == null) {
+			return "redirect:/";
+		}
+		
+		userVo.setNo(authUser.getNo());		
+		userService.updateUser(userVo);
+		authUser.setName(userVo.getName());
+		
+		return "redirect:/user/update";
 	}
 }

@@ -3,7 +3,7 @@
 <configuration>
 	<typeAliases>
 		<typeAlias type="com.douzone.mysite.vo.GuestBookVo" alias="guestbookvo"/>
-		<typeAlias type="com.douzone.mysite.vo.GuestBookVo" alias="uservo"/>
+		<typeAlias type="com.douzone.mysite.vo.UserVo" alias="uservo"/>
     </typeAliases>	
 	<mappers>
 		<mapper resource="mybatis/mappers/guestbook.xml" />
