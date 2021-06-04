@@ -11,6 +11,7 @@ import java.util.List;
 
 import org.springframework.stereotype.Repository;
 
+import com.douzone.mysite.exception.GuestBookRepositoryException;
 import com.douzone.mysite.vo.GuestBookVo;
 
 @Repository
@@ -42,7 +43,7 @@ public class GuestBookRepository {
 			result = count == 1;
 
 		} catch (SQLException e) {
-			System.out.println("error:" + e);
+			throw new GuestBookRepositoryException(e.getMessage());
 		} finally {
 			try {
 				if (pstmt != null) {
@@ -53,8 +54,8 @@ public class GuestBookRepository {
 					conn.close();
 				}
 
-			} catch (Exception e2) {
-				// TODO: handle exception
+			} catch (Exception e) {
+				throw new GuestBookRepositoryException(e.getMessage());
 			}
 		}
 
@@ -99,7 +100,7 @@ public class GuestBookRepository {
 			}
 
 		} catch (SQLException e) {
-			System.out.println("error:" + e);
+			throw new GuestBookRepositoryException(e.getMessage());
 		} finally {
 			try {
 
@@ -114,8 +115,8 @@ public class GuestBookRepository {
 					conn.close();
 				}
 
-			} catch (Exception e2) {
-				// TODO: handle exception
+			} catch (Exception e) {
+				throw new GuestBookRepositoryException(e.getMessage());
 			}
 		}
 		return result;
