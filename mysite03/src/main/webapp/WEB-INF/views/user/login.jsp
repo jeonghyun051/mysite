@@ -16,7 +16,7 @@
 		<div id="content">
 			<div id="user">
 				<form id="login-form" name="loginform" method="post"
-					action="${pageContext.request.contextPath }/user">
+					action="${pageContext.request.contextPath }/user/login">
 					<input type="hidden" value="login" name="a" /> <label
 						class="block-label" for="email">이메일</label> <input id="email"
 						name="email" type="text"
