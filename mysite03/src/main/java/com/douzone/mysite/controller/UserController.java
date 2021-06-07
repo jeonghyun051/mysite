@@ -53,11 +53,7 @@ public class UserController {
 	@RequestMapping(value = "/update", method = RequestMethod.POST)
 	public String update(@AuthUser UserVo authUser, UserVo userVo) {
 		
-		if(authUser == null) {
-			return "redirect:/";
-		}
-		
-		userVo.setNo(authUser.getNo());		
+		userVo.setNo(authUser.getNo());
 		userService.updateUser(userVo);
 		authUser.setName(userVo.getName());
 		
