@@ -15,10 +15,7 @@
 		<c:import url="/WEB-INF/views/includes/header.jsp" />
 		<div id="content">
 			<div id="board">
-				<form id="search_form" action="${pageContext.request.contextPath }/board">
-					<input type="hidden" name="a" value="search" />
-					<input type="hidden" name="p" value="0" />
-					
+				<form id="search_form" action="${pageContext.request.contextPath }/board/search/0" method="GET">
 					<input type="text" id="kwd" name="kwd"> 
 					<input type="submit" value="찾기">
 				</form>
@@ -37,10 +34,10 @@
 						
 							<c:choose>
 								<c:when test="${empty param.kwd }">
-									<td>${count-status.index-param.p*5 }</td>
+									<td>${count-status.index-page*5 }</td>
 								</c:when>
 								<c:otherwise>
-									<td>${count2-status.index-param.p*5 }</td>
+									<td>${count2-status.index-page*5 }</td>
 								</c:otherwise>
 							</c:choose>
 							
@@ -53,14 +50,13 @@
 								<td style="text-align: left; padding-left: ${list.depth *20}px"><img
 									src='${pageContext.servletContext.contextPath }/assets/images/reply.png' />
 							</c:if>
-
-							<a href="${pageContext.request.contextPath }/board?a=view&no=${list.no }">${list.title }</a>
+							<a href="${pageContext.request.contextPath }/board/view/${list.no}">${list.title } </a>
 							<td>${list.userName }</td>
 							<td>${list.hit }</td>
 							<td>${list.regDate }</td>
 							<td><c:if test="${list.userNo == authUser.no}">
 									<a
-										href="${pageContext.request.contextPath }/board?a=delete&no=${list.no }&p=${param.p}"
+										href="${pageContext.request.contextPath }/board/delete/${list.no }/${page }"
 										class="del" style='background-image:url("${pageContext.request.contextPath }/assets/images/recycle.png")'>삭제</a>
 								</c:if></td>
 						</tr>
@@ -69,15 +65,15 @@
 
 				<!-- pager 추가 -->
 				<c:choose>
-					<c:when test="${empty param.kwd }">
+					<c:when test="${empty kwd }">
 						<div class="pager">
 							<ul>
 								<c:choose>
-									<c:when test="${param.p == 0 }">
-										<li><a href="/mysite02/board?a=list&p=${param.p}">◀</a></li>
+									<c:when test="${page == 0 }">
+										<li><a href="/mysite03/board/${page }">◀</a></li>
 									</c:when>
 									<c:otherwise>
-										<li><a href="/mysite02/board?a=list&p=${param.p-1}">◀</a></li>
+										<li><a href="/mysite03/board/${page -1}">◀</a></li>
 									</c:otherwise>
 								</c:choose>
 		
@@ -85,21 +81,21 @@
 								<c:forEach begin="0" end="${lastPageNo }" var="lastPageNo"
 									varStatus="status">
 									<c:choose>
-										<c:when test="${param.p == status.index }">
+										<c:when test="${page == status.index }">
 											<li class="selected"><a
-												href="/mysite02/board?a=list&p=${status.index }">${status.count }</a></li>
+												href="${pageContext.request.contextPath }/board/${status.index }">${status.count }</a></li>
 										</c:when>
 										<c:otherwise>
-											<li><a href="/mysite02/board?a=list&p=${status.index }">${status.count }</a></li>
+											<li><a href="${pageContext.request.contextPath }/board/${status.index }">${status.count }</a></li>
 										</c:otherwise>
 									</c:choose>
 								</c:forEach>
 								<c:choose>
-									<c:when test="${param.p == lastPageNo }">
-										<li><a href="/mysite02/board?a=list&p=${param.p}">▶</a></li>
+									<c:when test="${page == lastPageNo }">
+										<li><a href="${pageContext.request.contextPath }/board/${page}">▶</a></li>
 									</c:when>
 									<c:otherwise>
-										<li><a href="/mysite02/board?a=list&p=${param.p+1}">▶</a></li>
+										<li><a href="${pageContext.request.contextPath }/board/${page+1}">▶</a></li>
 									</c:otherwise>
 								</c:choose>
 		
@@ -110,11 +106,11 @@
 						<div class="pager">
 							<ul>
 								<c:choose>
-									<c:when test="${param.p == 0 }">
-										<li><a href="/mysite02/board?a=search&p=${param.p}&kwd=${param.kwd }" >◀</a></li>
+									<c:when test="${page == 0 }">
+										<li><a href="${pageContext.request.contextPath }/board/search/${page}?kwd=${kwd }" >◀</a></li>
 									</c:when>
 									<c:otherwise>
-										<li><a href="/mysite02/board?a=search&p=${param.p -1}&kwd=${param.kwd }" >◀</a></li>
+										<li><a href="${pageContext.request.contextPath }/board/search/${page-1}?kwd=${kwd }" >◀</a></li>
 									</c:otherwise>
 								</c:choose>
 		
@@ -122,21 +118,21 @@
 								<c:forEach begin="0" end="${lastPageNo2 }" var="lastPageNo"
 									varStatus="status">
 									<c:choose>
-										<c:when test="${param.p == status.index }">
+										<c:when test="${page == status.index }">
 											<li class="selected"><a
-												href="/mysite02/board?a=search&p=${status.index }&kwd=${param.kwd}">${status.count }</a></li>
+												href="${pageContext.request.contextPath }/board/search/${status.index }?kwd=${kwd }">${status.count }</a></li>
 										</c:when>
 										<c:otherwise>
-											<li><a href="/mysite02/board?a=search&p=${status.index }&kwd=${param.kwd}">${status.count }</a></li>
+											<li><a href="${pageContext.request.contextPath }/board/search/${status.index }?kwd=${kwd }">${status.count }</a></li>
 										</c:otherwise>
 									</c:choose>
 								</c:forEach>
 								<c:choose>
-									<c:when test="${param.p == lastPageNo2 }">
-										<li><a href="/mysite02/board?a=search&p=${param.p}&kwd=${param.kwd }" >▶</a></li>
+									<c:when test="${page == lastPageNo2 }">
+										<li><a href="${pageContext.request.contextPath }/board/search/${page}?kwd=${kwd }" >▶</a></li>
 									</c:when>
 									<c:otherwise>
-										<li><a href="/mysite02/board?a=search&p=${param.p+1}&kwd=${param.kwd }">▶</a></li>
+										<li><a href="${pageContext.request.contextPath }/board/search/${page +1}?kwd=${kwd }">▶</a></li>
 									</c:otherwise>
 								</c:choose>
 		
@@ -150,7 +146,7 @@
 				<c:if test="${authUser.no != null }">
 					<div class="bottom">
 						<a
-							href="${pageContext.request.contextPath }/board?a=writeform&boardNo=0"
+							href="${pageContext.request.contextPath }/board/write/0/0"
 							id="new-book">글쓰기</a>
 					</div>
 				</c:if>

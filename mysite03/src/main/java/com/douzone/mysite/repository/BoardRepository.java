@@ -6,15 +6,25 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
+import javax.sql.DataSource;
+
+import org.apache.ibatis.session.SqlSession;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import com.douzone.mysite.vo.BoardVo;
 
 @Repository
 public class BoardRepository {
+	
+	@Autowired
+	private SqlSession sqlSession;
+
+	@Autowired
+	private DataSource dataSource;
+	
 	public Boolean insert(BoardVo vo) {
 
 		Connection conn = null;
@@ -277,76 +287,77 @@ public class BoardRepository {
 
 	public List<BoardVo> findAll(int page) {
 
-		List<BoardVo> result = new ArrayList<>();
-
-		Connection conn = null;
-		PreparedStatement pstmt = null;
-		ResultSet rs = null;
-
-		try {
-
-			conn = getConnection();
-			String sql = "select b.no, b.title, b.contents, b.reg_date, b.hit, b.group_no, b.order_no, b.depth, b.user_no, u.name \r\n"
-					+ "from board b, user u\r\n" + "where u.no = b.user_no \r\n"
-					+ "order by group_no desc, order_no asc limit ?,5";
-
-			// 3. sql문 준비
-			pstmt = conn.prepareStatement(sql);
-			pstmt.setInt(1, page * 5);
-
-			// 4. SQL문을 실행
-			rs = pstmt.executeQuery();
-
-			// 5. 결과 가져오기
-			while (rs.next()) {
-				Long no = rs.getLong(1);
-				String title = rs.getString(2);
-				String contents = rs.getString(3);
-				String regDate = rs.getString(4);
-				int hit = rs.getInt(5);
-				int groupNo = rs.getInt(6);
-				int orderNo = rs.getInt(7);
-				int depth = rs.getInt(8);
-				Long userNo = rs.getLong(9);
-				String name = rs.getString(10);
-
-				BoardVo vo = new BoardVo();
-
-				vo.setNo(no);
-				vo.setTitle(title);
-				vo.setContents(contents);
-				vo.setRegDate(regDate);
-				vo.setHit(hit);
-				vo.setGroupNo(groupNo);
-				vo.setOrderNO(orderNo);
-				vo.setDepth(depth);
-				vo.setUserNo(userNo);
-				vo.setUserName(name);
-
-				result.add(vo);
-			}
-
-		} catch (SQLException e) {
-			System.out.println("error:" + e);
-		} finally {
-			try {
-
-				if (rs != null) {
-					rs.close();
-				}
-				if (pstmt != null) {
-					pstmt.close();
-				}
-
-				if (conn != null) {
-					conn.close();
-				}
-
-			} catch (Exception e2) {
-				// TODO: handle exception
-			}
-		}
-		return result;
+//		List<BoardVo> result = new ArrayList<>();
+//
+//		Connection conn = null;
+//		PreparedStatement pstmt = null;
+//		ResultSet rs = null;
+//
+//		try {
+//
+//			conn = getConnection();
+//			String sql = "select b.no, b.title, b.contents, b.reg_date, b.hit, b.group_no, b.order_no, b.depth, b.user_no, u.name \r\n"
+//					+ "from board b, user u\r\n" + "where u.no = b.user_no \r\n"
+//					+ "order by group_no desc, order_no asc limit ?,5";
+//
+//			// 3. sql문 준비
+//			pstmt = conn.prepareStatement(sql);
+//			pstmt.setInt(1, page * 5);
+//
+//			// 4. SQL문을 실행
+//			rs = pstmt.executeQuery();
+//
+//			// 5. 결과 가져오기
+//			while (rs.next()) {
+//				Long no = rs.getLong(1);
+//				String title = rs.getString(2);
+//				String contents = rs.getString(3);
+//				String regDate = rs.getString(4);
+//				int hit = rs.getInt(5);
+//				int groupNo = rs.getInt(6);
+//				int orderNo = rs.getInt(7);
+//				int depth = rs.getInt(8);
+//				Long userNo = rs.getLong(9);
+//				String name = rs.getString(10);
+//
+//				BoardVo vo = new BoardVo();
+//
+//				vo.setNo(no);
+//				vo.setTitle(title);
+//				vo.setContents(contents);
+//				vo.setRegDate(regDate);
+//				vo.setHit(hit);
+//				vo.setGroupNo(groupNo);
+//				vo.setOrderNO(orderNo);
+//				vo.setDepth(depth);
+//				vo.setUserNo(userNo);
+//				vo.setUserName(name);
+//
+//				result.add(vo);
+//			}
+//
+//		} catch (SQLException e) {
+//			System.out.println("error:" + e);
+//		} finally {
+//			try {
+//
+//				if (rs != null) {
+//					rs.close();
+//				}
+//				if (pstmt != null) {
+//					pstmt.close();
+//				}
+//
+//				if (conn != null) {
+//					conn.close();
+//				}
+//
+//			} catch (Exception e2) {
+//				// TODO: handle exception
+//			}
+//		}
+		
+		return sqlSession.selectList("board.findAll",page);
 	}
 	
 	public List<BoardVo> findByKwd(int page, String kwd) {

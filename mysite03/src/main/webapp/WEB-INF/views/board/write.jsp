@@ -14,8 +14,7 @@
 		<c:import url="/WEB-INF/views/includes/header.jsp"/>
 		<div id="content">
 			<div id="board">
-				<form class="board-form" method="post" action="${pageContext.request.contextPath }/board?a=write&boardNo=${boardNo }">
-					<input type = "hidden" name = "a" value="write">
+				<form class="board-form" method="post" action="${pageContext.request.contextPath }/board/write/${boardNo }">
 					<input type = "hidden" name = "userNo" value="${authUser.no }">
 					<input type = "hidden" name = "groupNo" value="${groupNo }">
 					<table class="tbl-ex">
@@ -29,12 +28,12 @@
 						<tr>
 							<td class="label">내용</td>
 							<td>
-								<textarea id="content" name="content"></textarea>
+								<textarea id="content" name="contents"></textarea>
 							</td>
 						</tr>
 					</table>
 					<div class="bottom">
-						<a href="/board">취소</a>
+						<a href="/board/0">취소</a>
 						<input type="submit" value="등록">
 					</div>
 				</form>				

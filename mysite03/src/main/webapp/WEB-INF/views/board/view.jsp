@@ -35,12 +35,20 @@
 					</tr>
 				</table>
 				<div class="bottom">
-				<c:if test="${authUser.no != null }">
-					<a href="${pageContext.request.contextPath }/board?a=writeform&boardNo=${vo.no }&userNo=${authUser.no }&groupNo=${vo.groupNo}" id="new-book">글쓰기</a>
+				<c:if test="${authUser.no != null}">
+					<c:choose>
+						<c:when test="${vo.depth == 2}">
+							<a href="#" id="new-book">덧글은 2개제한</a>
+						</c:when>
+						<c:otherwise>
+							<a href="${pageContext.request.contextPath }/board/write/${vo.no }/${vo.groupNo}" id="new-book">글쓰기</a>
+						</c:otherwise>
+				</c:choose>
+					
 				</c:if>
-				<a href="${pageContext.request.contextPath }/board?a=list&p=0">글목록</a>
+				<a href="${pageContext.request.contextPath }/board/0">글목록</a>
 				<c:if test="${authUser.no == vo.userNo}">
-					<a href="${pageContext.request.contextPath }/board?a=modifyform&no=${vo.no}">글수정</a>
+					<a href="${pageContext.request.contextPath }/board/modify/${vo.no}">글수정</a>
 				</c:if>
 				</div>
 			</div>
