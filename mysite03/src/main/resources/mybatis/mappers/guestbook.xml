@@ -3,7 +3,7 @@
 <mapper namespace="guestbook">
 	<select id="findAll" resultType="guestbookvo">
 		<![CDATA[
-		select no2, name, password, message, reg_date 
+		select no, name, password, message, reg_date 
 		from guestbook 
 		order by no desc
 		]]>
