@@ -27,8 +27,9 @@ public class AdminController {
 	
 	@RequestMapping(value = "/main/update", method = RequestMethod.POST)
 	public String updateMain(SiteVo vo) {
+		System.out.println("텍스트값" + vo.getDescription()	);
 		adminService.update(vo);
-		return "redirect:/admin";
+		return "redirect:/";
 	}
 	
 	@RequestMapping("/guestbook")

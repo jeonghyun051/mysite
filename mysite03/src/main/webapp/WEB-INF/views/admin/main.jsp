@@ -2,6 +2,7 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn"%> 
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<% pageContext.setAttribute("newline", "\n"); %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -20,10 +21,11 @@
 						<input id="title" name="title" type="text" value="${vo.title }">
 						
 						<label class="block-label" for="welcomeMessage">환영 메세지</label>
-						<input id="welcomeMessage" name="welecome" type="text" value="${vo.welcome }">
+						<input id="welcomeMessage" name="welcome" type="text" value="${vo.welcome }">
 
 						<label class="block-label">프로필 이미지</label>
-						<img id="profile" src="${pageContext.request.contextPath }/${vo.profile }">				
+						<img id="profile" src="${pageContext.request.contextPath }${vo.profile }">	
+						<input name="profile" type="hidden" value="${pageContext.request.contextPath }/${vo.profile }">			
 
 						<label class="block-label">사이트 설명</label>
 						<textarea name="description">${vo.description }</textarea>

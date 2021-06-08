@@ -14,6 +14,7 @@ public class AdminRepository {
 	
 	public int update(SiteVo vo) {
 		int result = sqlSession.update("site.update",vo);
+		System.out.println("result:" + result);
 		return result;
 	}
 

@@ -26,12 +26,12 @@ public class SiteVo {
 	public String getDescription() {
 		return description;
 	}
-	public void setDecription(String description) {
+	public void setDescription(String description) {
 		this.description = description;
 	}
 	@Override
 	public String toString() {
-		return "SiteVo [title=" + title + ", welcome=" + welcome + ", profile=" + profile + ", description=" + description
-				+ "]";
-	}
+		return "SiteVo [title=" + title + ", welcome=" + welcome + ", profile=" + profile + ", description="
+				+ description + "]";
+	} 
 }
