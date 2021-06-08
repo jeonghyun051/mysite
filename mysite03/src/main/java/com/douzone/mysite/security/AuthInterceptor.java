@@ -55,11 +55,9 @@ public class AuthInterceptor extends HandlerInterceptorAdapter {
 		String authRole = authUser.getRole();
 		System.out.println("role:"+ role + +','+ "authRole:"+ authRole);
 		if("ADMIN".equals(authRole) == false && role.equals(authRole) == false) { 
-			System.out.println("실행6");
 			response.sendRedirect(request.getContextPath());
 			return false;
 		} 
-		
 		return true;
 	}	
 }

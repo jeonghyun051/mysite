@@ -151,10 +151,8 @@
 											href="${pageContext.request.contextPath }/board/search/${page +1}?kwd=${kwd }">▶</a></li>
 									</c:otherwise>
 								</c:choose>
-
 							</ul>
 						</div>
-
 					</c:otherwise>
 				</c:choose>
 				<!-- pager 추가 -->
@@ -163,7 +161,6 @@
 					<a href="${pageContext.request.contextPath }/board/write/0/0"
 						id="new-book">글쓰기</a>
 				</div>
-
 			</div>
 		</div>
 		<c:import url="/WEB-INF/views/includes/navigation.jsp">

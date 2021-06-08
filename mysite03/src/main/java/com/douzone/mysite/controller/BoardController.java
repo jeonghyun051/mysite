@@ -14,6 +14,7 @@ import com.douzone.mysite.service.BoardService;
 import com.douzone.mysite.vo.BoardVo;
 import com.douzone.mysite.vo.UserVo;
 
+@Auth
 @RequestMapping("/board")
 @Controller
 public class BoardController {
@@ -74,7 +75,6 @@ public class BoardController {
 		}
 	}
 	
-	@Auth
 	@RequestMapping("/modify/{no}")
 	public String modify(@PathVariable Long no, Model model) {
 		model.addAttribute("vo", boardService.findById(no));
@@ -87,7 +87,6 @@ public class BoardController {
 		return "redirect:/board/view/"+vo.getNo();
 	}
 	
-	@Auth
 	@RequestMapping("write/{boardNo}/{groupNo}")
 	public String write(@PathVariable int boardNo, @PathVariable int groupNo, Model model) {	
 		model.addAttribute("boardNo", boardNo);
