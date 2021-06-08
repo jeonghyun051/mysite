@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
+import com.douzone.mysite.security.Auth;
 import com.douzone.mysite.security.AuthUser;
 import com.douzone.mysite.service.BoardService;
 import com.douzone.mysite.vo.BoardVo;
@@ -73,6 +74,7 @@ public class BoardController {
 		}
 	}
 	
+	@Auth
 	@RequestMapping("/modify/{no}")
 	public String modify(@PathVariable Long no, Model model) {
 		model.addAttribute("vo", boardService.findById(no));
@@ -85,6 +87,7 @@ public class BoardController {
 		return "redirect:/board/view/"+vo.getNo();
 	}
 	
+	@Auth
 	@RequestMapping("write/{boardNo}/{groupNo}")
 	public String write(@PathVariable int boardNo, @PathVariable int groupNo, Model model) {	
 		model.addAttribute("boardNo", boardNo);

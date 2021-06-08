@@ -1,15 +1,18 @@
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt"%>
-<%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn"%> 
+<%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
-<% pageContext.setAttribute("newline", "\n"); %>
+<%
+pageContext.setAttribute("newline", "\n");
+%>
 <!DOCTYPE html>
 <html>
 <head>
 <title>mysite</title>
 <meta http-equiv="content-type" content="text/html; charset=utf-8">
-<link href="${pageContext.request.contextPath }/assets/css/board.css" rel="stylesheet" type="text/css">
+<link href="${pageContext.request.contextPath }/assets/css/board.css"
+	rel="stylesheet" type="text/css">
 </head>
 <body>
 	<div id="container">
@@ -27,29 +30,30 @@
 					<tr>
 						<td class="label">내용</td>
 						<td>
-							<div class="view-content">
-							${fn:replace(vo.contents, newline, "<br/>") }
-							
+							<div class="view-content">${fn:replace(vo.contents, newline, "<br/>") }
+
 							</div>
 						</td>
 					</tr>
 				</table>
 				<div class="bottom">
-				<c:if test="${authUser.no != null}">
+
 					<c:choose>
 						<c:when test="${vo.depth == 2}">
 							<a href="#" id="new-book">덧글은 2개제한</a>
 						</c:when>
 						<c:otherwise>
-							<a href="${pageContext.request.contextPath }/board/write/${vo.no }/${vo.groupNo}" id="new-book">글쓰기</a>
+							<a
+								href="${pageContext.request.contextPath }/board/write/${vo.no }/${vo.groupNo}"
+								id="new-book">글쓰기</a>
 						</c:otherwise>
-				</c:choose>
-					
-				</c:if>
-				<a href="${pageContext.request.contextPath }/board/0">글목록</a>
-				<c:if test="${authUser.no == vo.userNo}">
-					<a href="${pageContext.request.contextPath }/board/modify/${vo.no}">글수정</a>
-				</c:if>
+					</c:choose>
+
+					<a href="${pageContext.request.contextPath }/board/0">글목록</a>
+					<c:if test="${authUser.no == vo.userNo}">
+						<a
+							href="${pageContext.request.contextPath }/board/modify/${vo.no}">글수정</a>
+					</c:if>
 				</div>
 			</div>
 		</div>
