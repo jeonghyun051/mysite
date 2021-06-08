@@ -15,7 +15,6 @@ public class BoardService {
 	private BoardRepository boardRepository;
 
 	public List<BoardVo> findAll(int page) {
-		System.out.println(boardRepository.findAll(page));
 		return boardRepository.findAll(page);
 	}
 
@@ -29,6 +28,7 @@ public class BoardService {
 	}
 
 	public void deleteById(Long no) {
+		System.out.println("서비스값" + boardRepository.deleteById(no));
 		boardRepository.deleteById(no);
 
 	}
@@ -69,5 +69,9 @@ public class BoardService {
 	public void update2(int groupNo, int orderNO) {
 		boardRepository.update2(groupNo, orderNO);
 		
+	}
+
+	public int count() {
+		return boardRepository.count();
 	}
 }

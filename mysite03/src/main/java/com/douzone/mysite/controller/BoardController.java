@@ -24,8 +24,8 @@ public class BoardController {
 
 	@RequestMapping("/{page}")
 	public String index(@PathVariable int page, Model model, @AuthUser UserVo authUser) {
-
-		int count = new BoardRepository().count();
+		
+		int count = boardService.count();
 		int firstPageNo = 0;
 		int lastPageNo = (count - 1) / 5;
 		
@@ -101,7 +101,6 @@ public class BoardController {
 	
 	@RequestMapping(value = "write/{boardNo}", method = RequestMethod.POST)
 	public String write(@PathVariable Long boardNo, int groupNo, BoardVo vo) {	
-		System.out.println();
 
 		if (boardNo == 0) {
 			vo.setGroupNo(boardService.findMaxGroupNo());

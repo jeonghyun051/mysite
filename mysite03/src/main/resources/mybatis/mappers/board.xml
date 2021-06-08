@@ -5,12 +5,74 @@
 	
 	<select id="findAll" parameterType="int" resultType="boardvo">
 		<![CDATA[
-			select b.no, b.title, b.contents, b.reg_date as regDate, b.hit, b.group_no as groupNo, b.order_no as orderNo, b.depth, b.user_no as userNo, u.name
+			select b.no, b.title, b.contents, b.reg_date as regDate, b.hit, b.group_no as groupNo, b.order_no as orderNo, b.depth, b.user_no as userNo, u.name as userName
 			from board b, user u
 			where u.no = b.user_no
-			order by group_no desc, order_no asc limit #{page },5
+			order by group_no desc, order_no asc limit #{value },5
 		]]>
 	</select>
 	
+	<insert id="insert" parameterType="boardvo">
+		<![CDATA[
+			insert into board 
+			values (null, #{title }, #{contents }, now(), #{hit }, #{groupNo }, #{orderNO }, #{depth }, #{userNo })
+		]]>
+	</insert>
 	
+	<select id="findMaxGroupNo" resultType="boardvo">
+		<![CDATA[
+			select max(group_no) as groupNo from board
+		]]>
+	</select>
+
+	<select id="count" resultType="int">
+		<![CDATA[
+				select count(*) as count from board
+		]]>
+	</select> 
+	
+	<select id="countByKwd" parameterType="map" resultType="integer">
+		<![CDATA[
+				select count(*)
+				from board b
+				join user u on u.no = b.user_no 
+				where b.title like '%${k }%' or b.contents like '%${k }%' or u.name like '%${k }%'
+				order by group_no desc, order_no asc limit #{p },5
+		]]>
+	</select> 
+	
+	<delete id="deleteById" parameterType="long">
+		<![CDATA[
+			delete from board where no = #{value }
+		]]>	
+	</delete>
+	
+	<insert id="updateHit" parameterType="long">
+		<![CDATA[
+			update board set hit =hit+1 where no=#{value}
+		]]>	
+	</insert>
+	
+<!-- 	<update id="update" parameterType="integer">
+		<![CDATA[
+			update board 
+			set order_no=order_no+1
+			where group_no = #{no } and order_no>=1
+		]]>	
+	</update>
+	
+	<update id="update2" parameterType="map">
+		<![CDATA[
+			update board 
+			set order_no=order_no+1
+			where group_no = #{no } and order_no>#{groupNo }
+		]]>	
+	</update>
+	
+	
+	<update id="boardupdate" parameterType="vo">
+		<![CDATA[
+			update board set title = #{title }, contents= #{contents } where no = ${no } 	
+		]]>	
+	</update> -->
 </mapper>
