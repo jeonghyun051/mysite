@@ -39,7 +39,7 @@ public class UserController {
 		return "user/login";
 	}	
 	
-	// @Auth(role = "ADMIN", test=true)
+	
 	@Auth
 	@RequestMapping(value = "/update", method = RequestMethod.GET)
 	public String update(@AuthUser UserVo authUser, Model model) {

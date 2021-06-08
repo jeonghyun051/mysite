@@ -28,7 +28,6 @@ public class BoardService {
 	}
 
 	public void deleteById(Long no) {
-		System.out.println("서비스값" + boardRepository.deleteById(no));
 		boardRepository.deleteById(no);
 
 	}

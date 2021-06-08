@@ -61,7 +61,6 @@ public class BoardController {
 	@RequestMapping(value = "/search/{page}", method = RequestMethod.GET)
 	public String search(@PathVariable int page, String kwd, Model model) {
 		int count = boardService.countByKwd(page,kwd);
-		System.out.println("count" + count);
 		if(count == 0) {
 			return "";
 		} else {
@@ -105,12 +104,10 @@ public class BoardController {
 		if (boardNo == 0) {
 			vo.setGroupNo(boardService.findMaxGroupNo());
 			boardService.insert(vo);
-			
 			return "redirect:/board/"+0;
 		}
 		
 		else {
-			
 			BoardVo vo2 = boardService.findById(boardNo);
 			if(vo2.getDepth() == 0) {
 				vo.setTitle(vo.getTitle());

@@ -24,8 +24,8 @@
 						<input id="welcomeMessage" name="welcome" type="text" value="${vo.welcome }">
 
 						<label class="block-label">프로필 이미지</label>
-						<img id="profile" src="${pageContext.request.contextPath }${vo.profile }">	
-						<input name="profile" type="hidden" value="${pageContext.request.contextPath }/${vo.profile }">			
+						<img id="profile" src="${vo.profile }">	
+						<input name="profile" type="hidden" value="${vo.profile }">			
 
 						<label class="block-label">사이트 설명</label>
 						<textarea name="description">${vo.description }</textarea>
