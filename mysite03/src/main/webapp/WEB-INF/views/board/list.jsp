@@ -22,11 +22,12 @@
 				<table class="tbl-ex">
 					<tr>
 						<th>번호</th>
-						<th style="text-align: left">제목</th>
+						<th style="text-align: left">제목$</th>
 						<th>글쓴이</th>
 						<th>조회수</th>
 						<th>작성일</th>
 						<th>&nbsp;</th>
+				
 					</tr>
 
 					<c:forEach items="${list }" var="list" varStatus="status">

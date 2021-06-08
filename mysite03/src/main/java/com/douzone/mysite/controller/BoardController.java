@@ -1,7 +1,6 @@
 package com.douzone.mysite.controller;
 
 import java.util.List;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -9,7 +8,6 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
-import com.douzone.mysite.repository.BoardRepository;
 import com.douzone.mysite.security.AuthUser;
 import com.douzone.mysite.service.BoardService;
 import com.douzone.mysite.vo.BoardVo;
@@ -24,7 +22,6 @@ public class BoardController {
 
 	@RequestMapping("/{page}")
 	public String index(@PathVariable int page, Model model, @AuthUser UserVo authUser) {
-		
 		int count = boardService.count();
 		int firstPageNo = 0;
 		int lastPageNo = (count - 1) / 5;
@@ -79,14 +76,12 @@ public class BoardController {
 	@RequestMapping("/modify/{no}")
 	public String modify(@PathVariable Long no, Model model) {
 		model.addAttribute("vo", boardService.findById(no));
-		
 		return "board/modify";
 	}
 	
 	@RequestMapping(value = "/modify", method = RequestMethod.POST)
 	public String modify(BoardVo vo, Model model) {	
 		boardService.boardUpdate(vo);
-		
 		return "redirect:/board/view/"+vo.getNo();
 	}
 	
