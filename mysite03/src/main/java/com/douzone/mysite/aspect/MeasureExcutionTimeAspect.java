@@ -11,7 +11,7 @@ import org.springframework.util.StopWatch;
 public class MeasureExcutionTimeAspect {
 	
 	// repository 밑에 있는 모든 클래스의 모든 매서드에 이 어드바이스를 적용한다.
-	@Around("execution(* *..*.repository.*.*(..))")
+	@Around("execution(* *..*.repository.*.*(..)) || execution(* *..*.service.*.*(..)) || execution(* *..*.controller.*.*(..))")
 	public Object aroundAdvice(ProceedingJoinPoint pjp) throws Throwable{
 		// before
 		StopWatch sw = new StopWatch();
