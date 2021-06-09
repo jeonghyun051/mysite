@@ -25,7 +25,6 @@
 
 						<label class="block-label">프로필 이미지</label>
 						<img id="profile" src="${pageContext.request.contextPath }${vo.profile }">	
-						<input name="profile" type="hidden" value="${vo.profile }">
 						<input type="file" name="file1">			
 
 						<label class="block-label">사이트 설명</label>

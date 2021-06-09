@@ -12,10 +12,9 @@ public class AdminRepository {
 	@Autowired
 	private SqlSession sqlSession;
 	
-	public int update(SiteVo vo) {
-		int result = sqlSession.update("site.update",vo);
-		System.out.println("result:" + result);
-		return result;
+	public void update(SiteVo vo) {
+
+		 sqlSession.update("site.update",vo);
 	}
 
 	public SiteVo findOne() {
