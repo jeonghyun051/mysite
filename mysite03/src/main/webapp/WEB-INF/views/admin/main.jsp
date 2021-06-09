@@ -16,7 +16,7 @@
 		<div id="wrapper">
 			<div id="content">
 				<div id="site-form">
-					<form method="post" action="${pageContext.request.contextPath }/admin/main/update">
+					<form method="post" action="${pageContext.request.contextPath }/admin/main/update" enctype="multipart/form-data">
 						<label class="block-label" for="title">사이트 타이틀</label>
 						<input id="title" name="title" type="text" value="${vo.title }">
 						
@@ -24,8 +24,9 @@
 						<input id="welcomeMessage" name="welcome" type="text" value="${vo.welcome }">
 
 						<label class="block-label">프로필 이미지</label>
-						<img id="profile" src="${vo.profile }">	
-						<input name="profile" type="hidden" value="${vo.profile }">			
+						<img id="profile" src="${pageContext.request.contextPath }${vo.profile }">	
+						<input name="profile" type="hidden" value="${vo.profile }">
+						<input type="file" name="file1">			
 
 						<label class="block-label">사이트 설명</label>
 						<textarea name="description">${vo.description }</textarea>
