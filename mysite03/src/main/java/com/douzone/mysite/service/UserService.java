@@ -14,7 +14,6 @@ public class UserService {
 
 	public void join(UserVo vo) {
 		userRepository.insert(vo);
-		
 	}
 
 	public UserVo getUser(String email, String password) {
@@ -22,12 +21,17 @@ public class UserService {
 	}
 
 	public UserVo getUser(Long no) {
-		
 		return userRepository.findByNo(no);
+	}
+	
+	// api 이메일 중복체크
+	public UserVo getUser(String email) {
+		return userRepository.findByEmail(email);
 	}
 
 	public void updateUser(UserVo userVo) {
 		userRepository.update(userVo);
-		
 	}
+
+
 }
