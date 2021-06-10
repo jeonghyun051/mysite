@@ -26,12 +26,13 @@
 					console.error(status,e);	
 				},
 				success:function(res){
+					console.log(res);
 					if(res.result != "success"){
-						console.log("error");
+						console.log(res.message);
 						return;
 					}
 					
-					if(res.exist){
+					if(res.data){
 						alert("존재하는 이메일 입니다. 다른 이메일을 사용하세요");
 						$("#email").val("");
 						$("#email").focus;
