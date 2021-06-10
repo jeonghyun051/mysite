@@ -14,7 +14,15 @@
 	$(function(){
 		btn = $('#btn-check');
 		btn.click(function(){
-			console.log("....");
+
+			$.ajax({
+				url:"/mysite03/user/api/checkemail?email=rlawjdgus@naver.com",
+				type:"get",
+				dataType:"json",
+				success:function(res){
+					console.log(res);
+				}
+			});
 		});
 	});
 </script>

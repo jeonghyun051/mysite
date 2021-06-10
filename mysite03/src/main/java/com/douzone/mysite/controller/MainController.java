@@ -1,6 +1,7 @@
 package com.douzone.mysite.controller;
 
 import javax.servlet.ServletContext;
+import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -22,10 +23,12 @@ public class MainController {
 	private AdminService adminService;
 	
 	@RequestMapping("")
-	public String main(Model model) {
+	public String main(Model model, HttpSession session) {
 		SiteVo vo = adminService.findOne();
 		model.addAttribute("vo",vo);
-		application.setAttribute("title", vo.getTitle());
+		// application.setAttribute("title", vo.getTitle());
+		ServletContext abc = session.getServletContext();
+		abc.setAttribute("title", vo.getTitle());
 		return "main/index";
 	}
 	
