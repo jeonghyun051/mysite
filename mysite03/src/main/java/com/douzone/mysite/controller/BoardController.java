@@ -1,9 +1,15 @@
 package com.douzone.mysite.controller;
 
 import java.util.List;
+
+import javax.validation.Valid;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
+import org.springframework.validation.ObjectError;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -85,30 +91,39 @@ public class BoardController {
 	}
 	
 	@RequestMapping(value = "write/{boardNo}", method = RequestMethod.POST)
-	public String write(@PathVariable Long boardNo, int groupNo, BoardVo vo) {	
-		if (boardNo == 0) {
-			vo.setGroupNo(boardService.findMaxGroupNo());
-			boardService.insert(vo);
-			return "redirect:/board/"+0;
-		}
-		else {
-			BoardVo vo2 = boardService.findById(boardNo);
-			vo.setGroupNo(groupNo);
-			vo.setDepth(vo2.getDepth()+1);
-			vo.setHit(0);
-			if(vo2.getDepth() == 0) {
-				vo.setOrderNO(1);
-				boardService.update(groupNo);
-				boardService.insert2(vo);
-				return "redirect:/board/0";
-			} else if(vo2.getDepth() == 1) {
-				vo.setOrderNO(vo2.getOrderNO()+1);
-				vo.setDepth(vo2.getDepth()+1);
-				boardService.update2(groupNo, vo2.getOrderNO());
-				boardService.insert2(vo);
-				return "redirect:/board/0";
-			} 
-		}
-		return "redirect:/board/0";
+	public String write(@ModelAttribute @Valid BoardVo vo, BindingResult result, Model model) {	
+		
+		if(result.hasErrors()) {
+			model.addAllAttributes(result.getModel());
+
+			
+			return "board/write";
+		} 
+		return "redirect:/board/"+0;
+		
+//		if (boardNo == 0) {
+//			vo.setGroupNo(boardService.findMaxGroupNo());
+//			boardService.insert(vo);
+//			return "redirect:/board/"+0;
+//		}
+//		else {
+//			BoardVo vo2 = boardService.findById(boardNo);
+//			vo.setGroupNo(groupNo);
+//			vo.setDepth(vo2.getDepth()+1);
+//			vo.setHit(0);
+//			if(vo2.getDepth() == 0) {
+//				vo.setOrderNO(1);
+//				boardService.update(groupNo);
+//				boardService.insert2(vo);
+//				return "redirect:/board/0";
+//			} else if(vo2.getDepth() == 1) {
+//				vo.setOrderNO(vo2.getOrderNO()+1);
+//				vo.setDepth(vo2.getDepth()+1);
+//				boardService.update2(groupNo, vo2.getOrderNO());
+//				boardService.insert2(vo);
+//				return "redirect:/board/0";
+//			} 
+//		}
+//		return "redirect:/board/0";
 	}
 }

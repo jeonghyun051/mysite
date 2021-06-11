@@ -6,7 +6,13 @@ import org.hibernate.validator.constraints.NotEmpty;
 public class BoardVo {
 
 	private Long no;
+	
+	@NotEmpty
+	@Length(min=2,max=10)
 	private String title;
+	
+	@NotEmpty
+	@Length(min=2,max=200)
 	private String contents;
 	private String regDate;
 	private int hit;
