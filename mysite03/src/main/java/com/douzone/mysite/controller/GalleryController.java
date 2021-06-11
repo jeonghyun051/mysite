@@ -41,7 +41,6 @@ public class GalleryController {
 	@RequestMapping(value = "/upload", method = RequestMethod.POST)
 	public String upload(GalleryVo vo, @RequestParam("file") MultipartFile file) {
 		String url = fileUploadService.restore(file);
-		System.out.println("커맨트" + vo.getComment());
 		if (url == null || vo.getComment().isEmpty() == true) {
 			return "redirect:/gallery";
 		}
