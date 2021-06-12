@@ -95,8 +95,9 @@ public class BoardController {
 		
 		if(result.hasErrors()) {
 			model.addAllAttributes(result.getModel());
+			model.addAttribute("boardNo", vo.getNo());
+			model.addAttribute("groupNo", vo.getGroupNo());
 
-			
 			return "board/write";
 		} 
 		return "redirect:/board/"+0;
