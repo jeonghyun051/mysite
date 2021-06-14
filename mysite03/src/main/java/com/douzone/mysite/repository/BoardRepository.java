@@ -23,7 +23,6 @@ public class BoardRepository {
 	}
 
 	public Boolean insert2(BoardVo vo) {
-
 		int count = sqlSession.insert("board.insert",vo);
 		return count == 1;
 	}
@@ -37,12 +36,10 @@ public class BoardRepository {
 	}
 		
 	public int count() {
-		
 		int count = sqlSession.selectOne("board.count");
 		if(count == 0) {
 			return -1;
 		}
-		
 		return count;
 	}
 	
@@ -101,35 +98,4 @@ public class BoardRepository {
 	public int updateHit(Long no) {
 		return sqlSession.update("board.updateHit",no);
 	}
-	
-// 집
-//	private Connection getConnection() throws SQLException {
-//		Connection conn = null;
-//		try {
-//
-//			Class.forName("org.mariadb.jdbc.Driver");
-//			String url = "jdbc:mysql://localhost:3306/webdb?characterEncoding=utf8";
-//			conn = DriverManager.getConnection(url, "webdb", "webdb");
-//		} catch (ClassNotFoundException e) {
-//			System.out.println("드라이버 로딩 실패");
-//		} catch (SQLException e) {
-//			System.out.println("error" + e);
-//		}
-//		return conn;
-//	}
-	
-//	교육
-//	private Connection getConnection() throws SQLException {
-//		Connection conn = null;
-//		try {
-//
-//			Class.forName("org.mariadb.jdbc.Driver");
-//			String url = "jdbc:mysql://192.168.254.35:3307/webdb?characterEncoding=utf8";
-//			conn = DriverManager.getConnection(url, "webdb", "webdb");
-//		} catch (ClassNotFoundException e) {
-//			System.out.println("드라이버 로딩 실패");
-//		} 
-//		return conn;
-//	}
-
 }

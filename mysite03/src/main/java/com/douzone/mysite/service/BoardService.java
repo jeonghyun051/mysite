@@ -42,32 +42,26 @@ public class BoardService {
 
 	public void boardUpdate(BoardVo vo) {
 		boardRepository.boardupdate(vo);
-		
 	}
 
 	public int findMaxGroupNo() {
 		return boardRepository.findMaxGroupNo();
-		
 	}
 
 	public void insert(BoardVo vo) {
 		boardRepository.insert(vo);
-		
 	}
 
 	public void update(int groupNo) {
 		boardRepository.update(groupNo);
-		
 	}
 
 	public void insert2(BoardVo vo) {
 		boardRepository.insert2(vo);	
-		
 	}
 
 	public void update2(int groupNo, int orderNO) {
 		boardRepository.update2(groupNo, orderNO);
-		
 	}
 
 	public int count() {
