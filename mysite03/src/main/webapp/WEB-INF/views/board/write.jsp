@@ -22,45 +22,39 @@
 					action="${pageContext.request.contextPath }/board/write/${boardNo }">
 					<input type="hidden" name="userNo" value="${authUser.no }">
 					<input type="hidden" name="groupNo" value="${groupNo }">
-
-					<p style="color: #f00; text-align: left; padding-left: 0">
-						<spring:hasBindErrors name="boardVo">
-							<c:if test="${errors.hasFieldErrors('title') }">
-								<spring:message
-									code="${errors.getFieldError('title').codes[0] }" />
-							</c:if>
-						</spring:hasBindErrors>
-					</p>
-					<p style="color: #f00; text-align: left; padding-left: 0">
-						<spring:hasBindErrors name="boardVo">
-							<c:if test="${errors.hasFieldErrors('contents') }">
-								<spring:message
-									code="${errors.getFieldError('contents').codes[0] }" />
-							</c:if>
-						</spring:hasBindErrors>
-					</p>
 					<table class="tbl-ex">
 						<tr>
-
 							<th colspan="2">글쓰기</th>
 						</tr>
 						<tr>
 							<td class="label">제목</td>
-							<td><input type="text" name="title" value="${boardVo.title }"></td>
+							<td><input type="text" name="title" value="${boardVo.title }">
+								<p style="color: #f00; text-align: left; padding-left: 0">
+									<spring:hasBindErrors name="boardVo">
+										<c:if test="${errors.hasFieldErrors('title') }">
+											<spring:message
+												code="${errors.getFieldError('title').codes[0] }" />
+										</c:if>
+									</spring:hasBindErrors>
+								</p></td>
 							<td></td>
-
 						</tr>
-
 						<tr>
 							<td class="label">내용</td>
-							<td><textarea id="content" name="contents">${boardVo.contents }</textarea></td>
+							<td><textarea id="content" name="contents">${boardVo.contents }</textarea>
+								<p style="color: #f00; text-align: left; padding-left: 0">
+									<spring:hasBindErrors name="boardVo">
+										<c:if test="${errors.hasFieldErrors('contents') }">
+											<spring:message
+												code="${errors.getFieldError('contents').codes[0] }" />
+										</c:if>
+									</spring:hasBindErrors>
+								</p></td>
 						</tr>
 					</table>
 					<div class="bottom">
-						<a href="/board/0">취소</a> 
-						<input type="submit" value="등록">
+						<a href="/board/0">취소</a> <input type="submit" value="등록">
 					</div>
-
 				</form:form>
 			</div>
 		</div>

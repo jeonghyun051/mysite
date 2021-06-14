@@ -74,9 +74,9 @@ $(function(){
 				<p class="validateTips normal">이미지와 간단한 코멘트를 입력해 주세요.</p>
 				<form action="${pageContext.request.contextPath }/gallery/upload"
 					method="post" enctype="multipart/form-data">
-					<label>코멘트</label> <input type="text" id="input-comments"
-						name="comment" value="text"> <label>이미지</label> <input
-						type="file" id="input-file" name="file"> <input
+					<label>코멘트</label> 
+					<input type="text" id="input-comments" name="comment" value="text"> <label>이미지</label> 
+						<input type="file" id="input-file" name="file"> <input
 						type="submit" tabindex="-1"
 						style="position: absolute; top: -1000px">
 				</form>

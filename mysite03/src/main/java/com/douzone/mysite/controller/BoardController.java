@@ -58,7 +58,6 @@ public class BoardController {
 	@RequestMapping(value = "/search/{page}", method = RequestMethod.GET)
 	public String search(@PathVariable int page, String kwd, Model model) {
 		int count = boardService.countByKwd(page,kwd);
-		System.out.println("count:" + count);
 		if(count == 0) {
 			return "board/list";
 		} else {
@@ -91,40 +90,36 @@ public class BoardController {
 	}
 	
 	@RequestMapping(value = "write/{boardNo}", method = RequestMethod.POST)
-	public String write(@ModelAttribute @Valid BoardVo vo, BindingResult result, Model model) {	
-		
+	public String write(@ModelAttribute @Valid BoardVo vo, BindingResult result, Model model, @PathVariable Long boardNo) {	
 		if(result.hasErrors()) {
 			model.addAllAttributes(result.getModel());
-			model.addAttribute("boardNo", vo.getNo());
+			model.addAttribute("boardNo", boardNo);
 			model.addAttribute("groupNo", vo.getGroupNo());
-
 			return "board/write";
 		} 
+		if (boardNo == 0) {
+			vo.setGroupNo(boardService.findMaxGroupNo());
+			boardService.insert(vo);
+			return "redirect:/board/"+0;
+		}
+		else {
+			BoardVo vo2 = boardService.findById(boardNo);
+			vo.setGroupNo(vo.getGroupNo());
+			vo.setDepth(vo2.getDepth()+1);
+			vo.setHit(0);
+			if(vo2.getDepth() == 0) {
+				vo.setOrderNO(1);
+				boardService.update(vo.getGroupNo());
+				boardService.insert2(vo);
+				return "redirect:/board/0";
+			} else if(vo2.getDepth() == 1) {
+				vo.setOrderNO(vo2.getOrderNO()+1);
+				vo.setDepth(vo2.getDepth()+1);
+				boardService.update2(vo.getGroupNo(), vo2.getOrderNO());
+				boardService.insert2(vo);
+				return "redirect:/board/0";
+			} 
+		}
 		return "redirect:/board/"+0;
-		
-//		if (boardNo == 0) {
-//			vo.setGroupNo(boardService.findMaxGroupNo());
-//			boardService.insert(vo);
-//			return "redirect:/board/"+0;
-//		}
-//		else {
-//			BoardVo vo2 = boardService.findById(boardNo);
-//			vo.setGroupNo(groupNo);
-//			vo.setDepth(vo2.getDepth()+1);
-//			vo.setHit(0);
-//			if(vo2.getDepth() == 0) {
-//				vo.setOrderNO(1);
-//				boardService.update(groupNo);
-//				boardService.insert2(vo);
-//				return "redirect:/board/0";
-//			} else if(vo2.getDepth() == 1) {
-//				vo.setOrderNO(vo2.getOrderNO()+1);
-//				vo.setDepth(vo2.getDepth()+1);
-//				boardService.update2(groupNo, vo2.getOrderNO());
-//				boardService.insert2(vo);
-//				return "redirect:/board/0";
-//			} 
-//		}
-//		return "redirect:/board/0";
 	}
 }
