@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="UTF-8"?>
+<!-- <?xml version="1.0" encoding="UTF-8"?>
 <beans xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xmlns:aop="http://www.springframework.org/schema/aop"
 	xmlns="http://www.springframework.org/schema/beans"
@@ -9,7 +9,7 @@
 	http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop.xsd
 	http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
 	http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd">
-	<!-- Validator, conversionService, messageConverter를 자동으로 등록 -->
+	Validator, conversionService, messageConverter를 자동으로 등록
 	<mvc:annotation-driven>
 		<mvc:message-converters>
 			<bean
@@ -35,31 +35,31 @@
 		</mvc:argument-resolvers>
 	</mvc:annotation-driven>
 
-	<!-- Multipart Resolver -->
+	Multipart Resolver
 	<bean id="multipartResolver"
 		class="org.springframework.web.multipart.commons.CommonsMultipartResolver">
-		<!-- 최대업로드 가능한 바이트크기 -->
+		최대업로드 가능한 바이트크기
 		<property name="maxUploadSize" value="52428800" />
 
-		<!-- 디스크에 임시 파일을 생성하기 전에 메모리에 보관할수있는 최대 바이트 크기 -->
-		<!-- property name="maxInMemorySize" value="52428800" / -->
-		<!-- defaultEncoding -->
+		디스크에 임시 파일을 생성하기 전에 메모리에 보관할수있는 최대 바이트 크기
+		property name="maxInMemorySize" value="52428800" /
+		defaultEncoding
 		<property name="defaultEncoding" value="utf-8" />
 	</bean>
 
-	<!-- mvc resources mapping -->
+	mvc resources mapping
 	<mvc:resources location="file:/upload-mysite/"
 		mapping="/images/*" />
 
-	<!-- auto proxy -->
+	auto proxy
 	<aop:aspectj-autoproxy />
 
 
 
-	<!-- 서블릿 컨테이너의 디폴트 서블릿 위임 핸들러 -->
+	서블릿 컨테이너의 디폴트 서블릿 위임 핸들러
 	<mvc:default-servlet-handler />
 
-	<!-- Interceptors -->
+	Interceptors
 	<mvc:interceptors>
 		<mvc:interceptor>
 			<mvc:mapping path="/user/auth" />
@@ -80,7 +80,7 @@
 		</mvc:interceptor>
 	</mvc:interceptors>
 
-	<!-- ViewResolver 설정 -->
+	ViewResolver 설정
 	<bean id="viewResolver"
 		class="org.springframework.web.servlet.view.InternalResourceViewResolver">
 		<property name="viewClass"
@@ -89,7 +89,7 @@
 		<property name="suffix" value=".jsp" />
 	</bean>
 
-	<!-- 6. MessageSource -->
+	6. MessageSource
 	<bean id="messageSource"
 		class="org.springframework.context.support.ResourceBundleMessageSource">
 		<property name="basenames">
@@ -99,4 +99,4 @@
 		</property>
 	</bean>
 
-</beans>
+</beans> -->
