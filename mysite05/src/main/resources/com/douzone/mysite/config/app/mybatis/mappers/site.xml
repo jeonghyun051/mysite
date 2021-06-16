@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="site">
+ 	<update id="update" parameterType="sitevo">
+		<choose>
+			<when test='profile != null'>
+				<![CDATA[	
+				update site
+				   set title = #{title },
+				   	   welcome = #{welcome },
+				   	   profile = #{profile },
+				   	   decription = #{description }
+			  	]]>	
+			</when>
+			<otherwise>
+				<![CDATA[	
+				update site
+				   set title = #{title },
+				   	   welcome = #{welcome },
+				   	   decription = #{description }
+			  	]]>	
+			</otherwise>
+		</choose>		
+	</update>
+
+	<select id="selectOne" resultType="sitevo">
+		<![CDATA[
+			select title,welcome,profile,decription as description from site;
+		]]>	
+	</select>
+</mapper>
