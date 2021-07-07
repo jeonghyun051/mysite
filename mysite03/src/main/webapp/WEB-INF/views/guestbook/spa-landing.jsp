@@ -34,6 +34,20 @@ var fetch = function(no){
 	});
 }
 
+var valid = function(str){
+	// alert("이름이 비어 있습니다.");
+	$("#valid-message").text(str);
+	$("#dialog-message").dialog({
+		title: '안내',
+		modal: true,
+		buttons: {
+			"확인": function(){
+				$(this).dialog("close");
+			}
+		}				
+	});
+}
+
 var add = function(){
 	$("#add-form").submit(function(event){
 		event.preventDefault();
@@ -43,23 +57,23 @@ var add = function(){
 		vo.name = $("#input-name").val();
 		// validation name
 		if(vo.name == "") {
-			// alert("이름이 비어 있습니다.");
-			$("#valid-message").text("이름이 비어 있습니다.");
-			$("#dialog-message").dialog({
-				title: '안내',
-				modal: true,
-				buttons: {
-					"확인": function(){
-						$(this).dialog("close");
-					}
-				}				
-			});
+			valid("이름이 비어 있습니다.");
 			return;
 		}
+		
 		vo.password = $("#input-password").val();
 		// validation password
+		if(vo.password == "") {
+			valid("비밀번호가 비어 있습니다.");
+			return;
+		}
+		
 		vo.message = $("#tx-content").val();
 		// validation message
+		if(vo.message == "") {
+			valid("내용이 비어 있습니다.");
+			return;
+		}		
 		
 		// 데이터 등록
 		$.ajax({
