@@ -2,6 +2,7 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn"%> 
 <%@ page contentType="text/html;charset=UTF-8" %>
+<% pageContext.setAttribute("newline", "\n"); %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -11,7 +12,7 @@
 <link rel="stylesheet" href="https://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
 <script type="text/javascript" src="${pageContext.request.contextPath }/assets/js/jquery/jquery-1.9.0.js"></script>
 <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
-<% pageContext.setAttribute("newline", "\n"); %>
+
 <script>
 var fetch = function(no){
 	$.ajax({
@@ -23,7 +24,7 @@ var fetch = function(no){
 				html =
 					"<li data-no='" + vo.no + "'>" + 
 						"<strong>" + vo.name + "</strong>" +
-						"<p>" + vo.message + "</p>" +
+						"<p>" + vo.message.replaceAll("\n","<br/>") + "</p>" +
 						"<strong></strong>" + 
 						"<a href='' data-no='" + vo.no + "'>삭제</a>" + 
 					"</li>";
@@ -76,7 +77,7 @@ var add = function(){
 				html =
 					"<li data-no='" + vo.no + "'>" + 
 						"<strong>" + vo.name + "</strong>" +
-						"<p>" + ${fn:replace(vo.message, newline, "<br/>") }  + "</p>" +
+						"<p>" + vo.message.replaceAll("\n","<br/>") + "</p>" +
 						"<strong></strong>" + 
 						"<a href='' data-no='" + vo.no + "'>삭제</a>" + 
 					"</li>";
