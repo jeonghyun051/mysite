@@ -22,13 +22,21 @@ public class GuestBookRepository {
 	}
 
 	public List<GuestBookVo> findAll()  {
-
 		return sqlSession.selectList("guestbook.findAll");
+	}
+	
+	public List<GuestBookVo> findAll(int no)  {
+		if(no ==0) {
+			return sqlSession.selectList("guestbook.findAllByNoDefault");
+		} else
+			return sqlSession.selectList("guestbook.findAllByNo",no);
 	}
 
 	public boolean delete(GuestBookVo vo) {
-
 		int count = sqlSession.delete("guestbook.delete", vo);
+		System.out.println("count:"+count);
 		return count == 1;
 	}
+	
+	
 }

@@ -9,6 +9,23 @@
 		]]>
 	</select>
 
+	<select id="findAllByNoDefault" resultType="guestbookvo" >
+		<![CDATA[
+			select no, name, password, message, reg_date 
+			from guestbook 
+			order by no desc limit 0,3;
+		]]>
+	</select>
+	
+	<select id="findAllByNo" resultType="guestbookvo" parameterType="integer">
+		<![CDATA[
+			select no, name, password, message, reg_date 
+			from guestbook
+			where no < #{no} 
+			order by no desc limit 0,3;
+			]]>
+	</select>
+
 	<insert id="insert" parameterType="guestbookvo">
 		<![CDATA[
 		insert 
