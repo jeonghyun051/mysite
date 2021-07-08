@@ -32,8 +32,6 @@ public class GuestBookController {
 			data = -1L;
 		}
 		// 2. 삭제가 성공한 경우
-	
-		
 		return JsonResult.success(data);
 	}
 	
